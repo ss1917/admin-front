@@ -1,14 +1,14 @@
 <style lang="less">
-  @import './login.less';
+@import "./login.less";
 </style>
 
 <template>
   <div class="login">
     <div class="login-con">
-      <Card icon="log-in" title="欢迎登录" :bordered="false">
+      <Card icon="log-in" title="欢迎登录xxx系统" :bordered="false">
         <div class="form-con">
-          <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">输入任意用户名和密码即可</p>
+          <login-form @on-success-valid="handleSubmit" :callRes="res"></login-form>
+          <p class="login-tip">可以使用邮箱登录，第一次登录可以不输入动态码</p>
         </div>
       </Card>
     </div>
@@ -22,18 +22,54 @@ export default {
   components: {
     LoginForm
   },
+  data () {
+    return {
+      res: {}
+    }
+  },
+
   methods: {
     ...mapActions([
-      'handleLogin',
-      'getUserInfo'
+      'handleLogin'
+      // 'getUserInfo'
     ]),
-    handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
+    handleSubmit ({ username, password, dynamic }) {
+      this.handleLogin({ username, password, dynamic }).then(res => {
+        this.res = res
+        console.log('xxxx', res)
+        if (res.code === 0) {
+          this.$Message.success(`${res.msg}`)
           this.$router.push({
-            name: this.$config.homeName
+            name: 'home'
           })
-        })
+        } else if (res.code === -3) {
+          this.$Message.error({
+            content: `${res.msg}`,
+            duration: 5,
+            closable: true
+          })
+          // 邮箱认证通过，请根据邮箱完善用户信息
+          this.$router.push({ name: 'home' })
+        } else if (res.code === -6) {
+          this.$Message.error({
+            content: `${res.msg}`,
+            duration: 5,
+            closable: true
+          })
+          // 跳转添加MFA认证
+          this.$router.push({ name: 'mfa' })
+        } else {
+          this.$Message.error({
+            content: `${res.msg}`,
+            duration: 5,
+            closable: true
+          })
+        }
+        // this.getUserInfo().then(res => {
+        //   this.$router.push({
+        //     name: 'home'
+        //   })
+        // })
       })
     }
   }
@@ -41,5 +77,4 @@ export default {
 </script>
 
 <style>
-
 </style>

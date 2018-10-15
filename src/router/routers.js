@@ -12,20 +12,12 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-export default [
-  {
-    path: '/login',
-    name: 'login',
-    meta: {
-      title: 'Login - 登录',
-      hideInMenu: true
-    },
-    component: () => import('@/view/login/login.vue')
-  },
+export const routerMap = [
   {
     path: '/',
     name: '_home',
     redirect: '/home',
+    icon: 'md-home',
     component: Main,
     meta: {
       hideInMenu: true,
@@ -42,31 +34,6 @@ export default [
           icon: 'md-home'
         },
         component: () => import('@/view/single-page/home')
-      }
-    ]
-  },
-  {
-    path: '',
-    name: 'doc',
-    meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/join',
-    name: 'join',
-    component: Main,
-    children: [
-      {
-        path: 'join_page',
-        name: 'join_page',
-        meta: {
-          icon: '_qq',
-          title: 'QQ群'
-        },
-        component: () => import('@/view/join-page.vue')
       }
     ]
   },
@@ -380,6 +347,43 @@ export default [
         component: () => import('@/view/argu-page/query.vue')
       }
     ]
+  }
+]
+
+export const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      title: 'Login - 登录',
+      hideInMenu: true
+    },
+    component: () => import('@/view/login/login.vue')
+  },
+  {
+    path: '',
+    name: 'doc',
+    meta: {
+      title: '文档',
+      href: 'https://lison16.github.io/iview-admin-doc/#/',
+      icon: 'ios-book'
+    }
+  },
+  {
+    path: '/join',
+    name: 'join',
+    component: Main,
+    children: [
+      {
+        path: 'join_page',
+        name: 'join_page',
+        meta: {
+          icon: '_qq',
+          title: 'QQ群'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
   },
   {
     path: '/401',
@@ -391,7 +395,7 @@ export default [
   },
   {
     path: '/500',
-    name: 'error_500',
+    // name: 'error_500',
     meta: {
       hideInMenu: true
     },
@@ -399,7 +403,7 @@ export default [
   },
   {
     path: '*',
-    name: 'error_404',
+    // name: 'error_404',
     meta: {
       hideInMenu: true
     },

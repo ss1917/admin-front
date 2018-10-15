@@ -1,7 +1,7 @@
 <template>
   <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
-    <FormItem prop="userName">
-      <Input v-model="form.userName" placeholder="请输入用户名">
+    <FormItem prop="username">
+      <Input v-model="form.username" placeholder="请输入用户名">
         <span slot="prepend">
           <Icon :size="16" type="ios-person"></Icon>
         </span>
@@ -14,6 +14,13 @@
         </span>
       </Input>
     </FormItem>
+    <FormItem prop="dynamic">
+      <Input type="text" v-model="form.dynamic" placeholder="请输入动态码">
+        <span slot="prepend">
+          <Icon :size="14" type="md-key"></Icon>
+        </span>
+      </Input>
+    </FormItem>
     <FormItem>
       <Button @click="handleSubmit" type="primary" long>登录</Button>
     </FormItem>
@@ -23,19 +30,31 @@
 export default {
   name: 'LoginForm',
   props: {
+    // callRes: {
+    //   type: Object,
+    //   default: {}
+    // },
     userNameRules: {
       type: Array,
       default: () => {
-        return [
-          { required: true, message: '账号不能为空', trigger: 'blur' }
-        ]
+        return [{ required: true, message: '账号不能为空', trigger: 'blur' }]
       }
     },
     passwordRules: {
       type: Array,
       default: () => {
         return [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
+          { required: true, message: '密码不能为空', trigger: 'blur' },
+          {type: 'string', min: 8, message: '密码不能小于8位', trigger: 'blur'}
+        ]
+      }
+    },
+    dynamicRules: {
+      type: Array,
+      default: () => {
+        return [
+          { required: true, message: '动态码不能为空', trigger: 'blur' },
+          { type: 'string', min: 6, max: 6, message: '必须为六位数字', trigger: 'blur' }
         ]
       }
     }
@@ -43,26 +62,29 @@ export default {
   data () {
     return {
       form: {
-        userName: 'super_admin',
-        password: ''
+        username: 'super_admin',
+        password: 'woshishenshuo',
+        dynamic: '123456'
       }
     }
   },
   computed: {
     rules () {
       return {
-        userName: this.userNameRules,
-        password: this.passwordRules
+        username: this.userNameRules,
+        password: this.passwordRules,
+        dynamic: this.dynamicRules
       }
     }
   },
   methods: {
     handleSubmit () {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$emit('on-success-valid', {
-            userName: this.form.userName,
-            password: this.form.password
+            username: this.form.username,
+            password: this.form.password,
+            dynamic: this.form.dynamic
           })
         }
       })

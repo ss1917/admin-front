@@ -13,7 +13,9 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
+    // dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
+    // dev: 'http://172.16.0.223:9800/',
+    dev: '',
     pro: 'https://produce.com'
   },
   /**
