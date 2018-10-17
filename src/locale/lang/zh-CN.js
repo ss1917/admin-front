@@ -1,4 +1,5 @@
 export default {
+  _home: '首页',
   home: '首页',
   components: '组件',
   count_to_page: '数字渐变',
@@ -32,6 +33,9 @@ export default {
   buttonText: '显示模态框',
   'i18n-tip': '注：仅此页做了多语言，其他页面没有在多语言包中添加语言内容',
   error_store_page: '错误收集',
-  error_logger_page: '错误日志'
-
+  error_logger_page: '错误日志',
+  //
+  usermanage: '用户管理',
+  user: '用户列表',
+  role: '角色管理'
 }

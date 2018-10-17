@@ -21,7 +21,9 @@ router.beforeEach((to, from, next) => {
         // console.log('login authorization', rules)
         store.dispatch('concatRoutes', rules).then(routers => {
           // console.log('login concatRoutes', routers)
+          console.log('111')
           router.addRoutes(routers)
+          console.log('222')
           next({ ...to, replace: true })
         }).catch(() => {
           next({ name: 'login' })

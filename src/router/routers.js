@@ -17,9 +17,10 @@ export const routerMap = [
     path: '/',
     name: '_home',
     redirect: '/home',
-    icon: 'md-home',
+    // icon: 'md-home',
     component: Main,
     meta: {
+      icon: 'md-home',
       hideInMenu: true,
       notCache: true
     },
@@ -27,6 +28,7 @@ export const routerMap = [
       {
         path: '/home',
         name: 'home',
+        // icon: 'md-home',
         meta: {
           hideInMenu: true,
           title: '首页',
@@ -34,6 +36,35 @@ export const routerMap = [
           icon: 'md-home'
         },
         component: () => import('@/view/single-page/home')
+      }
+    ]
+  },
+  {
+    path: '/usermanage',
+    name: 'usermanage',
+    meta: {
+      icon: 'logo-buffer',
+      title: '用户管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
+          icon: 'md-trending-up',
+          title: '用户列表'
+        },
+        component: () => import('@/view/userManage/user.vue')
+      },
+      {
+        path: 'role',
+        name: 'role',
+        meta: {
+          icon: 'md-trending-up',
+          title: '角色管理'
+        },
+        component: () => import('@/view/userManage/role.vue')
       }
     ]
   },
@@ -356,12 +387,13 @@ export const routes = [
     name: 'login',
     meta: {
       title: 'Login - 登录',
+      icon: 'md-home',
       hideInMenu: true
     },
     component: () => import('@/view/login/login.vue')
   },
   {
-    path: '',
+    path: '/doc',
     name: 'doc',
     meta: {
       title: '文档',
@@ -395,7 +427,7 @@ export const routes = [
   },
   {
     path: '/500',
-    // name: 'error_500',
+    name: 'error_500',
     meta: {
       hideInMenu: true
     },

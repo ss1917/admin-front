@@ -66,7 +66,7 @@ export default {
   }
   .tables-editting-con{
     .tables-edit-input{
-      width: ~"calc(100% - 60px)";
+      width: ~"calc(100% - 50px)";
     }
   }
 }

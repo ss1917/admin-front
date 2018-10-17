@@ -9,19 +9,19 @@ export const login = ({ username, password, dynamic }) => {
   return axios.request({
     url: '/login/',
     data,
-    method: 'put'
+    method: 'post'
   })
 }
 
-export const getUserInfo = (token) => {
-  return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
-    method: 'get'
-  })
-}
+// export const getUserInfo = (token) => {
+//   return axios.request({
+//     url: 'get_info',
+//     params: {
+//       token
+//     },
+//     method: 'get'
+//   })
+// }
 
 export const logout = (token) => {
   return axios.request({
@@ -32,7 +32,42 @@ export const logout = (token) => {
 
 export const authorization = () => {
   return axios.request({
-    url: '/users/authorization/',
+    url: '/authorization/',
     method: 'get'
+  })
+}
+
+export const getuserlist = (page, limit) => {
+  return axios.request({
+    url: '/v2/accounts/user/',
+    method: 'get',
+    params: {
+      page,
+      limit
+    }
+  })
+}
+
+export const newuser = (data) => {
+  return axios.request({
+    url: '/v2/accounts/user/',
+    method: 'post',
+    data
+  })
+}
+
+export const deluser = (data) => {
+  return axios.request({
+    url: '/v2/accounts/user/',
+    method: 'delete',
+    data
+  })
+}
+
+export const updateuser = (data) => {
+  return axios.request({
+    url: '/v2/accounts/user/',
+    method: 'put',
+    data
   })
 }

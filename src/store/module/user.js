@@ -4,8 +4,9 @@ import { setToken, getToken } from '@/libs/util'
 export default {
   state: {
     userName: '',
+    nickName: '',
     userId: '',
-    avatorImgPath: '',
+    avatorImgPath: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png',
     token: getToken(),
     access: '',
     hasGetInfo: false
@@ -19,6 +20,9 @@ export default {
     },
     setUserName (state, name) {
       state.userName = name
+    },
+    setNickName (state, nick) {
+      state.nickName = name
     },
     setAccess (state, access) {
       state.access = access
@@ -45,7 +49,9 @@ export default {
           dynamic
         }).then(res => {
           const data = res.data
-          commit('setToken', data.token)
+          commit('setToken', data.auth_key)
+          commit('setUserName', data.username)
+          commit('setNickName', data.nickname)
           resolve(data)
         }).catch(err => {
           reject(err)

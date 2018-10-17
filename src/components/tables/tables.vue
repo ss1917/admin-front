@@ -5,7 +5,8 @@
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
       <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
+      <Button @click="handleSearch" class="search-btn" type="primary" icon="ios-search">&nbsp;&nbsp;搜索</Button>
+      <slot name="new_btn" ><Button type="primary" class="search-btn" >默认按钮</Button></slot>
     </div>
     <Table
       ref="tablesMain"
