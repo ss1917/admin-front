@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card>
-      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" Your Profile>
+      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" @on-save-edit="handleInput">
         <div slot="new_btn" class="search-con search-col">
           <Button type="info" class="search-btn"  @click="showModal">新建用户</Button>
         </div>
@@ -9,7 +9,7 @@
       <br/>
       <div style="margin: 0px;overflow: hidden">
         <div style="float: left;">
-            <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
+            <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
         </div>
     </div>
     </Card>
@@ -22,9 +22,14 @@
 <script>
 import Tables from '_c/tables'
 import FormGroup from '_c/form-group'
-import { getuserlist, newuser, deluser } from '@/api/user'
+import {
+  getuserlist,
+  newuser,
+  deluser,
+  updateuser,
+  patchuser
+} from '@/api/user'
 export default {
-  // name: 'users',
   components: {
     Tables,
     FormGroup
@@ -117,15 +122,45 @@ export default {
         { title: '部门', key: 'department', editable: true },
         { title: '手机', key: 'tel', editable: true },
         { title: '微信', key: 'wechat', editable: true },
-        { title: '工号', key: 'no', editable: true },
-        { title: '邮箱', key: 'email', editable: true },
-        { title: '登录IP', key: 'last_ip', editable: true },
-        { title: '最后登录', key: 'last_login', sortable: true },
+        { title: '工号', key: 'no' },
+        { title: '邮箱', key: 'email' },
+        { title: '登录IP', key: 'last_ip' },
+        {
+          title: '最后登录',
+          key: 'last_login',
+          align: 'center',
+          sortable: true
+        },
+        {
+          title: '状态',
+          key: 'status',
+          width: 80,
+          align: 'center',
+          render: (h, params, vm) => {
+            return h('div', [
+              h('i-switch', {
+                props: {
+                  // type: "primary",
+                  value: params.row.status === '0' // 控制开关的打开或关闭状态，官网文档属性是value
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  'on-change': () => {
+                    this.onSwitch(params)
+                  }
+                }
+              })
+            ])
+          }
+        },
         {
           title: '操作',
           align: 'center',
+          width: 80,
           key: 'handle',
-          options: ['delete'],
+          // options: ["delete"],
           button: [
             (h, params, vm) => {
               return h(
@@ -138,7 +173,8 @@ export default {
                   on: {
                     'on-ok': () => {
                       vm.$emit('on-delete', params)
-                      vm.$emit('input',
+                      vm.$emit(
+                        'input',
                         params.tableData.filter(
                           (item, index) => index !== params.row.initRowIndex
                         )
@@ -147,7 +183,17 @@ export default {
                   }
                 },
                 [
-                  // h('Button', '自定义删除')
+                  // h('Button', '自定义删除'),
+                  h(
+                    'Button',
+                    {
+                      props: {
+                        type: 'primary',
+                        size: 'small'
+                      }
+                    },
+                    '删除'
+                  )
                 ]
               )
             }
@@ -163,18 +209,18 @@ export default {
   },
   methods: {
     handleDelete (params) {
-      console.log(params.row.user_id)
-      deluser({user_id: params.row.user_id}).then(res => {
-        if (res.data.code === 0) {
-          this.$Message.success(`${res.data.msg}`)
-          this.pageTotal = res.data.count
-          this.tableData = res.data.data
-        } else {
-          this.$Message.error(`${res.data.msg}`)
-        }
-      }).catch(err => {
-        this.$Message.error(err)
-      })
+      deluser({ user_id: params.row.user_id })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+            // this.pageTotal = res.data.count;
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err)
+        })
     },
     changePage (value) {
       this.pageNum = value
@@ -219,23 +265,41 @@ export default {
             this.$Message.error(err)
           })
         this.modalMap.modalVisible = false
-      }, 2000)
+      }, 1000)
+    },
+    handleInput (editData) {
+      // 行内编辑
+      const EditData = {
+        user_id: editData.row.user_id,
+        key: editData.column.key,
+        value: editData.value
+      }
+      updateuser(EditData).then(res => {
+        if (res.data.code === 0) {
+          this.$Message.success(`${res.data.msg}`)
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
     },
     // 弹出对话框
     showModal () {
       this.modalMap.modalVisible = true
+    },
+    // 调用开关
+    onSwitch (editData) {
+      const EditData = {
+        user_id: editData.row.user_id,
+        key: editData.column.key
+      }
+      patchuser(EditData).then(res => {
+        if (res.data.code === 0) {
+          this.$Message.success(`${res.data.msg}`)
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
     }
-    // 确定对话框
-    // ok() {
-    //   setTimeout(() => {
-    //     this.$Message.info("Clicked ok");
-    //     this.modalMap.modalVisible = false;
-    //   }, 2000);
-    // },
-    // // 取消对话框
-    // cancel() {
-    //   this.$Message.info("Clicked cancel");
-    // }
   },
   mounted () {
     this.getUserList(this.pageNum, this.pageSize)

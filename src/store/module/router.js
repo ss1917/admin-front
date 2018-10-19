@@ -12,8 +12,6 @@ const getters = {
 }
 const mutations = {
   CONCAT_ROUTES (state, routerList) {
-    // console.log('已经要授权', routerList)
-    // console.log('不用授权', routes)
     state.routers = routerList.concat(routes)
     state.hasGetRules = true
   }
@@ -39,6 +37,7 @@ const actions = {
         } else {
           routerList = getAccesRouterList(routerMap, rules)
         }
+        console.log('routerList', routerList)
         commit('CONCAT_ROUTES', routerList)
         resolve(state.routers)
       } catch (err) {

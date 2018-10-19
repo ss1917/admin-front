@@ -30,10 +30,6 @@
 export default {
   name: 'LoginForm',
   props: {
-    // callRes: {
-    //   type: Object,
-    //   default: {}
-    // },
     userNameRules: {
       type: Array,
       default: () => {

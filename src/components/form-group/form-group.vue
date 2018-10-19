@@ -21,7 +21,7 @@
       </component>
     </FormItem>
     <FormItem>
-      <Button @click="handleSubmit" type="primary">提交</Button>
+      <Button @click="handleSubmit" type="primary" :loading="loading">提交</Button>
       <Button @click="handleReset" style="margin-left: 8px">重置</Button>
     </FormItem>
   </Form>
@@ -29,11 +29,11 @@
 
 <script>
 import clonedeep from 'clonedeep'
-// import { sentFormData } from '@/api/data'
 export default {
   name: 'FormGroup',
   data () {
     return {
+      loading: false,
       initValueList: [],
       rules: {},
       valueList: {},
@@ -49,10 +49,6 @@ export default {
       type: Number,
       default: 100
     }
-    // url: {
-    //   type: String,
-    //   required: true
-    // }
   },
   watch: {
     list () {
@@ -75,26 +71,18 @@ export default {
       this.valueList = valueList
       this.initValueList = initValueList
       this.errorStore = errorStore
-      console.log(this.valueList)
     },
     handleSubmit () {
-      console.log('提交按钮')
       this.$refs.form.validate(valid => {
         if (valid) {
           this.$emit('on-submit-success', {
             data: this.valueList
           })
-          // sentFormData({
-          //   url: this.url,
-          //   data: this.valueList
-          // }).then(res => {
-          //   this.$emit('on-submit-success', res)
-          // }).catch(err => {
-          //   this.$emit('on-submit-error', err)
-          //   for (let key in err) {
-          //     this.errorStore[key] = err[key]
-          //   }
-          // })
+          // 按钮loading
+          this.loading = true
+          setTimeout(() => {
+            this.loading = false
+          }, 1000)
         }
       })
     },
@@ -102,6 +90,7 @@ export default {
       this.valueList = clonedeep(this.initValueList)
     },
     handleFocus (name) {
+      console.log('  ', name)
       this.errorStore[name] = ''
     }
   },

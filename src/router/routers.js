@@ -17,9 +17,9 @@ export const routerMap = [
     path: '/',
     name: '_home',
     redirect: '/home',
-    // icon: 'md-home',
     component: Main,
     meta: {
+      title: '首页',
       icon: 'md-home',
       hideInMenu: true,
       notCache: true
@@ -28,7 +28,6 @@ export const routerMap = [
       {
         path: '/home',
         name: 'home',
-        // icon: 'md-home',
         meta: {
           hideInMenu: true,
           title: '首页',
@@ -437,6 +436,7 @@ export const routes = [
     path: '*',
     // name: 'error_404',
     meta: {
+      icon: 'md-home',
       hideInMenu: true
     },
     component: () => import('@/view/error-page/404.vue')

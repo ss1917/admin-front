@@ -3,8 +3,11 @@ import Cookies from 'js-cookie'
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
 
-export const TOKEN_KEY = 'auth_key'
+export const setTitle = (title) => {
+  window.document.title = `admin-${title}` || 'admin'
+}
 
+export const TOKEN_KEY = 'auth_key'
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: config.cookieExpires || 1})
 }
@@ -53,6 +56,7 @@ export const getMenuByRouter = (list, access) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
+  // let homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
   let homeItem = { ...homeRoute, icon: homeRoute.meta ? homeRoute.meta.icon : '' }
   let routeMetched = route.matched
   if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
@@ -88,6 +92,8 @@ export const showTitle = (item, vm) => vm.$config.useI18n ? vm.$t(item.name) : (
  * @description 本地存储和获取标签导航列表
  */
 export const setTagNavListInLocalstorage = list => {
+  // console.log('setTagNavListInLocalstorage', list)
+  // if (list[1] && !list[1].meta.icon) list.splice(1, 1)
   localStorage.tagNaveList = JSON.stringify(list)
 }
 /**

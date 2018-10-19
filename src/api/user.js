@@ -71,3 +71,23 @@ export const updateuser = (data) => {
     data
   })
 }
+
+export const patchuser = (data) => {
+  return axios.request({
+    url: '/v2/accounts/user/',
+    method: 'patch',
+    data
+  })
+}
+
+// role
+export const getrolelist = (page, limit) => {
+  return axios.request({
+    url: '/v2/accounts/role/',
+    method: 'get',
+    params: {
+      page,
+      limit
+    }
+  })
+}

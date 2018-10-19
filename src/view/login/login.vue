@@ -7,7 +7,7 @@
     <div class="login-con">
       <Card icon="log-in" title="欢迎登录xxx系统" :bordered="false">
         <div class="form-con">
-          <login-form @on-success-valid="handleSubmit" :callRes="res"></login-form>
+          <login-form @on-success-valid="handleSubmit"></login-form>
           <p class="login-tip">可以使用邮箱登录，第一次登录可以不输入动态码</p>
         </div>
       </Card>
@@ -24,7 +24,6 @@ export default {
   },
   data () {
     return {
-      res: {}
     }
   },
 
@@ -35,12 +34,10 @@ export default {
     ]),
     handleSubmit ({ username, password, dynamic }) {
       this.handleLogin({ username, password, dynamic }).then(res => {
-        this.res = res
-        console.log('xxxx', res)
         if (res.code === 0) {
           this.$Message.success(`${res.msg}`)
           this.$router.push({
-            name: 'home'
+            name: this.$config.homeName
           })
         } else if (res.code === -3) {
           this.$Message.error({

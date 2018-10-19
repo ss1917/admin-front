@@ -39,7 +39,7 @@ export default {
   },
   getters: {
     // menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
-    errorCount: state => state.errorList.length
+    // errorCount: state => state.errorList.length
   },
   mutations: {
     setBreadCrumb (state, route) {
@@ -56,6 +56,11 @@ export default {
         let homeTag = tagList.splice(homeTagIndex, 1)[0]
         tagList.unshift(homeTag)
       }
+      // 删除空标签
+      tagList.forEach((item, index) => {
+        if (!item.meta.icon) tagList.splice(index, 1)
+      })
+      // if (tagList[1] && !tagList[1].meta.icon) tagList.splice(1, 1)
       state.tagNavList = tagList
       setTagNavListInLocalstorage([...tagList])
     },
