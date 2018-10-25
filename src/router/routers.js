@@ -14,6 +14,31 @@ import parentView from '@/components/parent-view'
 
 export const routerMap = [
   {
+    path: '/',
+    name: '_home',
+    redirect: '/home',
+    component: Main,
+    meta: {
+      title: '首页',
+      icon: 'md-home',
+      hideInMenu: true,
+      notCache: true
+    },
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        meta: {
+          hideInMenu: true,
+          title: '首页',
+          notCache: true,
+          icon: 'md-home'
+        },
+        component: () => import('@/view/single-page/home')
+      }
+    ]
+  },
+  {
     path: '/usermanage',
     name: 'usermanage',
     meta: {
@@ -57,6 +82,35 @@ export const routerMap = [
           title: '角色管理'
         },
         component: () => import('@/view/userManage/role.vue')
+      }
+    ]
+  },
+  {
+    path: '/systemmanage',
+    name: 'systemmanage',
+    meta: {
+      icon: 'md-settings',
+      title: '系统管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'system',
+        name: 'system',
+        meta: {
+          icon: 'ios-settings',
+          title: '系统配置'
+        },
+        component: () => import('@/view/systemManage/system.vue')
+      },
+      {
+        path: 'systemlog',
+        name: 'systemlog',
+        meta: {
+          icon: 'ios-paper',
+          title: '系统日志'
+        },
+        component: () => import('@/view/systemManage/systemlog.vue')
       }
     ]
   },
@@ -232,45 +286,6 @@ export const routerMap = [
     ]
   },
   {
-    path: '/error_store',
-    name: 'error_store',
-    meta: {
-      hide: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'error_store_page',
-        name: 'error_store_page',
-        meta: {
-          icon: 'ios-bug',
-          title: '错误收集'
-        },
-        component: () => import('@/view/error-store/error-store.vue')
-      }
-    ]
-  },
-  {
-    path: '/error_logger',
-    name: 'error_logger',
-    meta: {
-      hide: true,
-      hideInMenu: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'error_logger_page',
-        name: 'error_logger_page',
-        meta: {
-          icon: 'ios-bug',
-          title: '错误收集'
-        },
-        component: () => import('@/view/single-page/error-logger.vue')
-      }
-    ]
-  },
-  {
     path: '/directive',
     name: 'directive',
     meta: {
@@ -385,31 +400,6 @@ export const routes = [
     component: () => import('@/view/login/login.vue')
   },
   {
-    path: '/',
-    name: '_home',
-    redirect: '/home',
-    component: Main,
-    meta: {
-      title: '首页',
-      icon: 'md-home',
-      hideInMenu: true,
-      notCache: true
-    },
-    children: [
-      {
-        path: '/home',
-        name: 'home',
-        meta: {
-          hideInMenu: true,
-          title: '首页',
-          notCache: true,
-          icon: 'md-home'
-        },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
-  },
-  {
     path: '/doc',
     name: 'doc',
     meta: {
@@ -452,7 +442,6 @@ export const routes = [
   },
   {
     path: '*',
-    // name: 'error_404',
     meta: {
       icon: 'md-home',
       hideInMenu: true

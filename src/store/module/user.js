@@ -1,4 +1,4 @@
-import { login, authorization } from '@/api/user'
+import { login, authorization, password } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
 export default {
@@ -77,13 +77,25 @@ export default {
     authorization ({ commit }, token) {
       return new Promise((resolve, reject) => {
         authorization().then(res => {
-          console.log(res)
-          if (parseInt(res.code) === 401) {
+          if (parseInt(res.status) === 401) {
             reject(new Error('token error'))
           } else {
             resolve(res.data.data.rules.page)
             commit('SET_RULES', res.data.data.rules.component)
           }
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    handlePassword ({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        password(data).then(res => {
+          if (res.data.code === 0) {
+            commit('setToken', '')
+            commit('setAccess', [])
+          }
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })

@@ -46,7 +46,7 @@ export default {
         {
           name: 'username',
           type: 'i-input',
-          value: 'woshiceshi',
+          value: '',
           label: '账户名称',
           rule: [
             { required: true, message: '账户名称不能为空', trigger: 'blur' }
@@ -55,7 +55,7 @@ export default {
         {
           name: 'nickname',
           type: 'i-input',
-          value: 'woshiceshi',
+          value: '',
           label: '用户姓名',
           rule: [
             { required: true, message: '用户姓名不能为空', trigger: 'blur' }
@@ -64,14 +64,14 @@ export default {
         {
           name: 'department',
           type: 'i-input',
-          value: 'woshiceshi',
+          value: '',
           label: '部门',
           rule: [{ required: true, message: '部门不能为空', trigger: 'blur' }]
         },
         {
           name: 'wechat',
           type: 'i-input',
-          value: 'woshiceshi',
+          value: '',
           label: '微信号码',
           rule: [
             { required: true, message: '微信号码不能为空', trigger: 'blur' }
@@ -80,7 +80,7 @@ export default {
         {
           name: 'tel',
           type: 'i-input',
-          value: '11111111111',
+          value: '',
           label: '手机号码',
           rule: [
             { required: true, message: '手机号不能为空', trigger: 'blur' },
@@ -96,14 +96,14 @@ export default {
         {
           name: 'no',
           type: 'i-input',
-          value: 'woshiceshi',
+          value: '',
           label: '工号',
           rule: [{ required: true, message: '工号不能为空', trigger: 'blur' }]
         },
         {
           name: 'email',
           type: 'i-input',
-          value: 'woshiceshi@qq.com',
+          value: '',
           label: '邮箱',
           rule: [
             { required: true, message: '邮箱不能为空', trigger: 'blur' },

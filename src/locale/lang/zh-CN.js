@@ -39,5 +39,8 @@ export default {
   user: '用户列表',
   role: '角色管理',
   functions: '权限列表',
-  menus: '菜单组件'
+  menus: '菜单组件',
+  systemmanage: '系统管理',
+  system: '系统配置',
+  systemlog: '系统日志'
 }

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-// import router from '@/router'
-// import { Message } from 'iview'
+import { Message } from 'iview'
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -48,23 +47,19 @@ class HttpRequest {
     // 响应拦截
     instance.interceptors.response.use(res => {
       // 对返回状态进行拦截
-      // if (res.status === '401') {
-      //   router.push({ name: 'error_401' })
-      // } else if (res.status === '404') {
-      //   router.push({ path: '/404' })
-      // } else if (res.status === '500') {
-      //   Message.error({
-      //     content: `500`,
-      //     duration: 5,
-      //     closable: true
-      //   })
-      // } else if (res.status === '403') {
-      //   Message.error({
-      //     content: `当前用户没有访问权限${res.data.msg}`,
-      //     duration: 5,
-      //     closable: true
-      //   })
-      // }
+      if (res.status === '403') {
+        Message.error({
+          content: `当前用户没有访问权限${res.data.msg}`,
+          duration: 5,
+          closable: true
+        })
+      } else if (res.status === '401') {
+        Message.error({
+          content: `没有登录${res.data.msg}`,
+          duration: 5,
+          closable: true
+        })
+      }
       this.destroy(url)
       const { data, status } = res
       return { data, status }

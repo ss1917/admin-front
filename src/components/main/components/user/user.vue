@@ -31,7 +31,6 @@
 <script>
 import './user.less'
 import { mapActions } from 'vuex'
-import { password } from '@/api/user'
 export default {
   name: 'User',
   props: {
@@ -90,7 +89,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['handleLogOut']),
+    ...mapActions(['handleLogOut', 'handlePassword']),
     handleSubmit () {
       this.$refs.formCustom.validate(valid => {
         if (valid) {
@@ -99,11 +98,11 @@ export default {
             new_password1: this.form.newPasswd,
             new_password2: this.form.passwdCheck
           }
-          password(dataInfo).then(res => {
-            if (res.data.code === '0') {
-              this.$Message.success(`${res.data.msg}`)
+          this.handlePassword(dataInfo).then(res => {
+            if (res.code === '0') {
+              this.$Message.success(`${res.msg}`)
             } else {
-              this.$Message.success(`${res.data.msg}`)
+              this.$Message.error(`${res.msg}`)
             }
           })
         } else {
