@@ -4,7 +4,7 @@ import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
 
 export const setTitle = (title) => {
-  window.document.title = `admin-${title}` || 'admin'
+  window.document.title = `${title} -admin` || 'admin'
 }
 
 export const TOKEN_KEY = 'auth_key'
@@ -109,6 +109,7 @@ export const getTagNavListFromLocalstorage = () => {
  * @description 用于找到路由列表中name为home的对象
  */
 export const getHomeRoute = (routers, homeName = 'home') => {
+  console.log(routers)
   let i = -1
   let len = routers.length
   let homeRoute = {}

@@ -37,7 +37,6 @@ const actions = {
         } else {
           routerList = getAccesRouterList(routerMap, rules)
         }
-        console.log('routerList', routerList)
         commit('CONCAT_ROUTES', routerList)
         resolve(state.routers)
       } catch (err) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card>
-      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" @on-save-edit="handleInput">
+      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns"  @on-delete="handleDelete" @on-save-edit="handleInput">
         <div slot="new_btn" class="search-con search-col">
           <Button type="info" class="search-btn"  @click="showModal">新建用户</Button>
         </div>

@@ -37,5 +37,7 @@ export default {
   //
   usermanage: '用户管理',
   user: '用户列表',
-  role: '角色管理'
+  role: '角色管理',
+  functions: '权限列表',
+  menus: '菜单组件'
 }

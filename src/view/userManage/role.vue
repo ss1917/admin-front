@@ -1,56 +1,90 @@
 <template>
 <div>
-<Card>
-  <div class="split-pane-page-wrapper">
-    <split-pane v-model="offset" @on-moving="handleMoving">
-      <div slot="left" class="pane left-pane">
-        <Row>
-          <Col span="23">
-        <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" @on-save-edit="handleInput">
-        <div slot="new_btn" class="search-con search-col">
-          <Button type="info" class="search-btn"  @click="showModal">新建</Button>
-        </div>
-      </tables>
-      </Col>
-      </Row>
-      <br/>
-      <div style="margin: 0px;overflow: hidden">
-        <div style="float: left;">
-            <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
-        </div>
+  <Card>
+    <div class="split">
+        <Split v-model="offset">
+          <div slot="left" class="split-pane">
+              <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns">
+              <div slot="new_btn" class="search-con search-col">
+              <Button type="info" class="search-btn"  @click="showModal">新建</Button>
+              </div>
+              </tables>
+            <br/>
+           <div style="margin: 0px;overflow: hidden">
+             <div style="float: left;">
+               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
+             </div>
+
+           </div>
+            </div>
+            <div slot="right" class="split-pane">
+              <Row>
+                <Col span="24" offset="1">
+              <Transfer
+              :list-style="listStyle"
+              :titles="tranferTitles"
+              :data="source"
+              :target-keys="targetKeys"
+              filterable
+              :filter-method="filterMethod"
+              @on-change="handleChange"></Transfer>
+              </Col>
+            </Row>
+            </div>
+        </Split>
     </div>
-      </div>
-      <div slot="right" class="pane right-pane"></div>
-    </split-pane>
-  </div>
   </Card>
   <Modal  v-model="modalMap.modalVisible"  :title="modalMap.modalTitle" :loading=true :footer-hide=true>
     <form-group :list="formList"  @on-submit-success="handleSubmit"></form-group>
   </Modal>
-  </div>
+</div>
 </template>
 
 <script>
-import SplitPane from '_c/split-pane'
 import Icons from '_c/icons'
 import Tables from '_c/tables'
 import FormGroup from '_c/form-group'
-import { getrolelist } from '@/api/user'
+import {
+  getuserlist,
+  getrolelist,
+  operationRole,
+  getUserByRole,
+  operationRoleUser,
+  operationRoleComponent,
+  operationRoleMenu,
+  operationRoleFunc,
+  getComponentslist,
+  getComponentByRole,
+  getMenuslist,
+  getMenusByRole,
+  getFuncslist,
+  getFuncsByRole
+} from '@/api/user'
 export default {
   components: {
-    SplitPane,
     Icons,
     Tables,
     FormGroup
   },
   data () {
     return {
-      offset: 0.6,
-      offsetVertical: '250px',
+      // 分割
+      offset: 0.5,
+      //
+      source: [],
+      targetKeys: [],
+      listStyle: {
+        // width: "250px",
+        height: '590px'
+      },
+      tranferTitles: ['所有列表', '已有列表'],
+      role_id: '',
+      // 穿梭框里面编辑的内容
+      editTransfer: '',
       // 弹出框
       modalMap: {
         modalVisible: false,
-        modalTitle: '创建用户'
+        modalTitle: '创建角色'
       },
       // 分页数据
       tableData: [],
@@ -59,27 +93,18 @@ export default {
       pageSize: 10, // 每页条数
       formList: [
         {
-          name: 'username',
+          name: 'role_name',
           type: 'i-input',
           value: 'woshiceshi',
-          label: '账户名称',
+          label: '角色名称',
           rule: [
-            { required: true, message: '账户名称不能为空', trigger: 'blur' }
-          ]
-        },
-        {
-          name: 'nickname',
-          type: 'i-input',
-          value: 'woshiceshi',
-          label: '用户姓名',
-          rule: [
-            { required: true, message: '用户姓名不能为空', trigger: 'blur' }
+            { required: true, message: '角色名称不能为空', trigger: 'blur' }
           ]
         }
       ],
       columns: [
-        { title: 'ID', key: 'role_id', width: 80, sortable: true },
-        { title: '角色', key: 'role_name', width: 100, sortable: true },
+        // { title: "角色ID", key: "role_id", width: 80, sortable: true },
+        { title: '角色', key: 'role_name', width: 120, sortable: true },
         {
           title: '状态',
           key: 'status',
@@ -89,7 +114,6 @@ export default {
             return h('div', [
               h('i-switch', {
                 props: {
-                  // type: "primary",
                   value: params.row.status === '0' // 控制开关的打开或关闭状态，官网文档属性是value
                 },
                 style: {
@@ -107,124 +131,108 @@ export default {
         {
           title: '操作',
           align: 'center',
-          // 渲染按钮
-          render: function (h, params) {
-            return h('span', [
-              // h(
-              //   "Poptip",
-              //   {
-              //     props: {
-              //       confirm: false
-              //     },
-              //     on: {
-              //       "on-ok": () => {
-              //         console.log("oooooo");
-              //       }
-              //     }
-              //   },
-              //   [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '10px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log('xxxx')
+          key: 'handle',
+          button: [
+            (h, params, vm) => {
+              return h('div', [
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.getUserInfoByRole(params.row.role_id)
+                      }
                     }
-                  }
-                },
-                '用户'
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
                   },
-                  style: {
-                    marginRight: '10px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log('xxxx')
+                  '用户'
+                ),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.getComponentsInfoByRole(params.row.role_id)
+                      }
                     }
-                  }
-                },
-                '组件'
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
                   },
-                  style: {
-                    marginRight: '10px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log('xxxx')
+                  '组件'
+                ),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.getMenusInfoByRole(params.row.role_id)
+                      }
                     }
-                  }
-                },
-                '菜单'
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
                   },
-                  style: {
-                    marginRight: '10px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log('xxxx')
+                  '菜单'
+                ),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'primary',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '10px'
+                    },
+                    on: {
+                      click: () => {
+                        this.getFuncInfoByRole(params.row.role_id)
+                      }
                     }
-                  }
-                },
-                '权限'
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'error',
-                    size: 'small'
                   },
-                  style: {
-                    marginRight: '10px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log('xxxx', this.handleDelete)
-                      this.handleDelete(params)
+                  '权限'
+                ),
+                h(
+                  'Button',
+                  {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '10px'
+                    },
+                    on: {
+                      click: () => {
+                        this.handleDelete(params)
+                      }
                     }
-                  }
-                },
-                '删除'
-              )
-            ])
-            // ]);
-          }
+                  },
+                  '删除'
+                )
+              ])
+            }
+          ]
         }
       ]
     }
   },
   methods: {
-    handleMoving (e) {
-      console.log(e.atMin, e.atMax)
-    },
     // 获取角色列表
     getRoleList (page, limit) {
       getrolelist(page, limit).then(res => {
@@ -237,33 +245,48 @@ export default {
         }
       })
     },
+    // 删除角色
     handleDelete (params) {
-      // let r = confirm("Press a button!");
-      console.log(params)
-      // deluser({ user_id: params.row.user_id })
-      //   .then(res => {
-      //     if (res.data.code === 0) {
-      //       this.$Message.success(`${res.data.msg}`);
-      //       // this.pageTotal = res.data.count;
-      //     } else {
-      //       this.$Message.error(`${res.data.msg}`);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.$Message.error(err);
-      //   });
-    },
-    handleSubmit (value) {
-      setTimeout(() => {}, 1000)
-    },
-    handleInput (editData) {
-      // 行内编辑
-      const EditData = {
-        user_id: editData.row.user_id,
-        key: editData.column.key,
-        value: editData.value
+      if (confirm(`确定要删除 ${params.row.role_name}`)) {
+        operationRole({ role_id: params.row.role_id }, 'delete')
+          .then(res => {
+            if (res.data.code === 0) {
+              this.$Message.success(`${res.data.msg}`)
+              this.tableData.splice(params.index, 1)
+            } else {
+              this.$Message.error(`${res.data.msg}`)
+            }
+          })
+          .catch(err => {
+            this.$Message.error(err)
+          })
       }
-      updateuser(EditData).then(res => {
+    },
+    // 添加
+    handleSubmit (value) {
+      setTimeout(() => {
+        operationRole(value.data, 'post').then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+            this.getRoleList(this.pageNum, this.pageSize)
+            this.modalMap.modalVisible = false
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      }, 1000)
+    },
+    // 弹出对话框
+    showModal () {
+      this.modalMap.modalVisible = true
+    },
+    // 调用开关
+    onSwitch (editData) {
+      const EditData = {
+        role_id: editData.row.role_id,
+        key: editData.column.key
+      }
+      operationRole(EditData, 'patch').then(res => {
         if (res.data.code === 0) {
           this.$Message.success(`${res.data.msg}`)
         } else {
@@ -271,18 +294,194 @@ export default {
         }
       })
     },
-    // 弹出对话框
-    showModal () {
-      this.modalMap.modalVisible = true
-    },
     changePage (value) {
       this.pageNum = value
       this.getRoleList(this.pageNum, this.pageSize)
     },
+
     // 每页条数
     handlePageSize (value) {
       this.pageSize = value
       this.getRoleList(1, this.pageSize)
+    },
+    //
+    getUserInfoByRole (value) {
+      this.role_id = value
+      this.tranferTitles = ['所有用户', '已有用户']
+      this.editTransfer = 'user'
+      let allData = []
+      let targetData = []
+      getuserlist('1', '20000').then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            allData.push({
+              key: item.user_id.toString(),
+              label: item.username.toString()
+            })
+          })
+          this.$Message.success(`${res.data.msg}`)
+          this.source = allData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+      getUserByRole(value).then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            targetData.push(item.user_id.toString())
+          })
+          this.targetKeys = targetData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+    },
+    // 获取组件列表
+    getComponentsInfoByRole (value) {
+      this.role_id = value
+      this.tranferTitles = ['所有组件', '已有组件']
+      this.editTransfer = 'component'
+      let allData = []
+      let targetData = []
+      getComponentslist().then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            allData.push({
+              key: item.comp_id.toString(),
+              label: item.component_name.toString()
+            })
+          })
+          this.source = allData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+      getComponentByRole(value).then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            console.log(item)
+            targetData.push(item.comp_id.toString())
+          })
+          this.targetKeys = targetData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+    },
+    // 获取菜单列表
+    getMenusInfoByRole (value) {
+      this.role_id = value
+      this.tranferTitles = ['所有菜单', '已有菜单']
+      this.editTransfer = 'menu'
+      let allData = []
+      let targetData = []
+      getMenuslist().then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            allData.push({
+              key: item.menu_id.toString(),
+              label: item.menu_name.toString()
+            })
+          })
+          this.source = allData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+      getMenusByRole(value).then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            targetData.push(item.menu_id.toString())
+          })
+          this.targetKeys = targetData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+    },
+    // 获取后端权限列表
+    getFuncInfoByRole (value) {
+      this.role_id = value
+      this.tranferTitles = ['所有权限', '已有权限']
+      this.editTransfer = 'func'
+      let allData = []
+      let targetData = []
+      getFuncslist().then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            allData.push({
+              key: item.func_id.toString(),
+              label: item.func_name.toString()
+            })
+          })
+          this.source = allData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+      getFuncsByRole(value).then(res => {
+        if (res.data.code === 0) {
+          res.data.data.forEach(item => {
+            targetData.push(item.func_id.toString())
+          })
+          this.targetKeys = targetData
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
+    },
+    handleChange (newTargetKeys) {
+      this.targetKeys = newTargetKeys
+      if (this.editTransfer === 'user') {
+        operationRoleUser(
+          { role_id: this.role_id, user_list: this.targetKeys },
+          'post'
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      } else if (this.editTransfer === 'component') {
+        operationRoleComponent(
+          { role_id: this.role_id, comp_list: this.targetKeys },
+          'post'
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      } else if (this.editTransfer === 'menu') {
+        operationRoleMenu(
+          { role_id: this.role_id, menu_list: this.targetKeys },
+          'post'
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      } else if (this.editTransfer === 'func') {
+        operationRoleFunc(
+          { role_id: this.role_id, func_list: this.targetKeys },
+          'post'
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      } else {
+        this.$Message.error('你在修改个锤子呀')
+      }
+    },
+    filterMethod (data, query) {
+      return data.label.indexOf(query) > -1
     }
   },
   mounted () {
@@ -291,42 +490,12 @@ export default {
 }
 </script>
 
-<style lang="less">
-.center-middle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.split-pane-page-wrapper {
+<style>
+.split {
   height: 750px;
-  .pane {
-    width: 100%;
-    height: 100%;
-    // &.left-pane{
-    //   // background: sandybrown;
-    // }
-    // &.right-pane{
-    //   background: palevioletred;
-    // }
-    // &.top-pane{
-    //   background: sandybrown;
-    // }
-    // &.bottom-pane{
-    //   background: palevioletred;
-    // }
-  }
-  .custom-trigger {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #000000;
-    position: absolute;
-    .center-middle;
-    box-shadow: 0 0 6px 0 rgba(28, 36, 56, 0.4);
-    i.trigger-icon {
-      .center-middle;
-    }
-  }
+  border: 1px solid #dcdee2;
+}
+.split-pane {
+  padding: 10px;
 }
 </style>

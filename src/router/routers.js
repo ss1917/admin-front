@@ -14,35 +14,10 @@ import parentView from '@/components/parent-view'
 
 export const routerMap = [
   {
-    path: '/',
-    name: '_home',
-    redirect: '/home',
-    component: Main,
-    meta: {
-      title: '首页',
-      icon: 'md-home',
-      hideInMenu: true,
-      notCache: true
-    },
-    children: [
-      {
-        path: '/home',
-        name: 'home',
-        meta: {
-          hideInMenu: true,
-          title: '首页',
-          notCache: true,
-          icon: 'md-home'
-        },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
-  },
-  {
     path: '/usermanage',
     name: 'usermanage',
     meta: {
-      icon: 'logo-buffer',
+      icon: 'md-contacts',
       title: '用户管理'
     },
     component: Main,
@@ -51,16 +26,34 @@ export const routerMap = [
         path: 'user',
         name: 'user',
         meta: {
-          icon: 'md-trending-up',
+          icon: 'ios-people',
           title: '用户列表'
         },
         component: () => import('@/view/userManage/user.vue')
       },
       {
+        path: 'functions',
+        name: 'functions',
+        meta: {
+          icon: 'ios-lock',
+          title: '权限列表'
+        },
+        component: () => import('@/view/userManage/functions.vue')
+      },
+      {
+        path: 'menus',
+        name: 'menus',
+        meta: {
+          icon: 'ios-menu',
+          title: '菜单组件'
+        },
+        component: () => import('@/view/userManage/routescomponents.vue')
+      },
+      {
         path: 'role',
         name: 'role',
         meta: {
-          icon: 'md-trending-up',
+          icon: 'ios-person',
           title: '角色管理'
         },
         component: () => import('@/view/userManage/role.vue')
@@ -390,6 +383,31 @@ export const routes = [
       hideInMenu: true
     },
     component: () => import('@/view/login/login.vue')
+  },
+  {
+    path: '/',
+    name: '_home',
+    redirect: '/home',
+    component: Main,
+    meta: {
+      title: '首页',
+      icon: 'md-home',
+      hideInMenu: true,
+      notCache: true
+    },
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        meta: {
+          hideInMenu: true,
+          title: '首页',
+          notCache: true,
+          icon: 'md-home'
+        },
+        component: () => import('@/view/single-page/home')
+      }
+    ]
   },
   {
     path: '/doc',

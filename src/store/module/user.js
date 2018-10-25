@@ -1,4 +1,4 @@
-import { login, getUserInfo, authorization } from '@/api/user'
+import { login, authorization } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
 export default {
@@ -77,11 +77,10 @@ export default {
     authorization ({ commit }, token) {
       return new Promise((resolve, reject) => {
         authorization().then(res => {
+          console.log(res)
           if (parseInt(res.code) === 401) {
             reject(new Error('token error'))
           } else {
-            // setToken(res.data.data.token)
-            console.log('res.data.data.rules.page', res.data.data.rules.page)
             resolve(res.data.data.rules.page)
             commit('SET_RULES', res.data.data.rules.component)
           }
@@ -89,26 +88,26 @@ export default {
           reject(error)
         })
       })
-    },
-    // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvator', data.avator)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
-        } catch (error) {
-          reject(error)
-        }
-      })
     }
+    // // 获取用户相关信息
+    // getUserInfo ({ state, commit }) {
+    //   return new Promise((resolve, reject) => {
+    //     try {
+    //       getUserInfo(state.token).then(res => {
+    //         const data = res.data
+    //         commit('setAvator', data.avator)
+    //         commit('setUserName', data.name)
+    //         commit('setUserId', data.user_id)
+    //         commit('setAccess', data.access)
+    //         commit('setHasGetInfo', true)
+    //         resolve(data)
+    //       }).catch(err => {
+    //         reject(err)
+    //       })
+    //     } catch (error) {
+    //       reject(error)
+    //     }
+    //   })
+    // }
   }
 }

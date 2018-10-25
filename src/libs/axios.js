@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
-// import { Spin } from 'iview'
+// import router from '@/router'
+// import { Message } from 'iview'
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -35,7 +36,6 @@ class HttpRequest {
   interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
-      console.log('config', config.data)
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好
@@ -47,7 +47,24 @@ class HttpRequest {
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
-      console.log('response', res)
+      // 对返回状态进行拦截
+      // if (res.status === '401') {
+      //   router.push({ name: 'error_401' })
+      // } else if (res.status === '404') {
+      //   router.push({ path: '/404' })
+      // } else if (res.status === '500') {
+      //   Message.error({
+      //     content: `500`,
+      //     duration: 5,
+      //     closable: true
+      //   })
+      // } else if (res.status === '403') {
+      //   Message.error({
+      //     content: `当前用户没有访问权限${res.data.msg}`,
+      //     duration: 5,
+      //     closable: true
+      //   })
+      // }
       this.destroy(url)
       const { data, status } = res
       return { data, status }
