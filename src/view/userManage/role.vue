@@ -12,7 +12,7 @@
             <br/>
            <div style="margin: 0px;overflow: hidden">
              <div style="float: left;">
-               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
+               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" :page-size-opts=[10,15,25,35,50,100] show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
              </div>
 
            </div>
@@ -75,7 +75,7 @@ export default {
       targetKeys: [],
       listStyle: {
         // width: "250px",
-        height: '590px'
+        height: '663px'
       },
       tranferTitles: ['所有列表', '已有列表'],
       role_id: '',
@@ -90,7 +90,7 @@ export default {
       tableData: [],
       pageTotal: 0, // 数据总数
       pageNum: 1, // 当前页码
-      pageSize: 10, // 每页条数
+      pageSize: 15, // 每页条数
       formList: [
         {
           name: 'role_name',

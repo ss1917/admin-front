@@ -26,6 +26,7 @@ export default {
         { label: '邮件设置', icon: 'ios-mail', name: 'emailSetting' },
         { label: '短信接口', icon: 'ios-notifications', name: 'smsSetting' },
         { label: 'LDAP设置', icon: 'ios-flag', name: 'LDAPSetting' },
+        { label: '邮箱登录', icon: 'md-mail', name: 'emailLogin' },
         {
           label: '核心设置',
           icon: 'ios-settings-outline',
@@ -106,6 +107,9 @@ export default {
           ]
           break
         case 'LDAPSetting':
+          this.formList = []
+          break
+        case 'emailLogin':
           this.formList = []
           break
         case 'centerSetting':

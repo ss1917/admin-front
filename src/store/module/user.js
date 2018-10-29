@@ -40,13 +40,14 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, {username, password, dynamic}) {
+    handleLogin ({ commit }, {username, password, dynamic, nextUrl}) {
       username = username.trim()
       return new Promise((resolve, reject) => {
         login({
           username,
           password,
-          dynamic
+          dynamic,
+          next_url: nextUrl
         }).then(res => {
           const data = res.data
           commit('setToken', data.auth_key)

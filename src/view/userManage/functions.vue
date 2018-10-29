@@ -11,7 +11,7 @@
   <Table size="small" ref="selection" border :columns="columns" :data="tableData"></Table>
   <div style="margin: 10px;overflow: hidden">
     <div style="float: left;">
-      <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
+      <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" :page-size-opts=[10,15,25,35,50,100] show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
     </div>
   </div>
   <Modal  v-model="modalMap.modalVisible"  :title="modalMap.modalTitle" :loading=true :footer-hide=true>
@@ -129,7 +129,7 @@ export default {
       tableData: [],
       pageTotal: 0, // 数据总数
       pageNum: 1, // 当前页码
-      pageSize: 10, // 每页条数
+      pageSize: 15, // 每页条数
       modalMap: {
         modalVisible: false,
         modalTitle: '创建用户'
@@ -142,8 +142,8 @@ export default {
     }
   },
   methods: {
-    getFuncsList (page, limit) {
-      getFuncslist(page, limit).then(res => {
+    getFuncsList (page, limit, key, value) {
+      getFuncslist(page, limit, key, value).then(res => {
         if (res.data.code === 0) {
           this.$Message.success(`${res.data.msg}`)
           this.pageTotal = res.data.count
@@ -205,7 +205,12 @@ export default {
         operationFunc(value.data, this.editModalData).then(res => {
           if (res.data.code === 0) {
             this.$Message.success(`${res.data.msg}`)
-            this.getFuncsList(this.pageNum, this.pageSize)
+            this.getFuncsList(
+              this.pageNum,
+              this.pageSize,
+              this.searchKey,
+              this.searchValue
+            )
             this.modalMap.modalVisible = false
           } else {
             this.$Message.error(`${res.data.msg}`)
@@ -246,19 +251,27 @@ export default {
     },
     changePage (value) {
       this.pageNum = value
-      this.getFuncsList(this.pageNum, this.pageSize)
+      this.getFuncsList(
+        this.pageNum,
+        this.pageSize,
+        this.searchKey,
+        this.searchValue
+      )
     },
     // 每页条数
     handlePageSize (value) {
       this.pageSize = value
-      this.getFuncsList(1, this.pageSize)
+      this.getFuncsList(1, this.pageSize, this.searchKey, this.searchValue)
     },
     handleClear (e) {
       if (e.target.value === '') this.tableData = this.value
     },
     handleSearch () {
-      this.tableData = this.tableData.filter(
-        item => item[this.searchKey].indexOf(this.searchValue) > -1
+      this.getFuncsList(
+        this.pageNum,
+        this.pageSize,
+        this.searchKey,
+        this.searchValue
       )
     }
   },

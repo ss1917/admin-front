@@ -58,8 +58,8 @@ export default {
   data () {
     return {
       form: {
-        username: 'super_admin',
-        password: 'woshishenshuo',
+        username: 'ss',
+        password: 'shenshuo',
         dynamic: '123456'
       }
     }

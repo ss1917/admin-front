@@ -69,7 +69,10 @@ export default {
         return []
       }
     },
-    size: String,
+    size: {
+      type: String,
+      default: 'small'
+    },
     width: {
       type: [Number, String]
     },
