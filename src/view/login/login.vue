@@ -23,9 +23,7 @@ export default {
     LoginForm
   },
   data () {
-    return {
-      nextUrl: this.$route.query.next_url
-    }
+    return {}
   },
 
   methods: {
@@ -34,7 +32,7 @@ export default {
       // 'getUserInfo'
     ]),
     handleSubmit ({ username, password, dynamic }) {
-      // const next_url = this.$route.query.next_url ? this.$route.query.next_url : ''
+      const nextUrl = this.$route.query.next_url ? this.$route.query.next_url : ''
       this.handleLogin({ username, password, dynamic, nextUrl }).then(res => {
         if (res.code === 0) {
           this.$Message.success(`${res.msg}`)
