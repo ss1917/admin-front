@@ -1,2 +1,4 @@
 import LoginForm from './login-form.vue'
-export default LoginForm
+import RegisterForm from './register.vue'
+import MFA from './mfa.vue'
+export {LoginForm, RegisterForm, MFA}

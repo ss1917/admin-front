@@ -2,15 +2,15 @@
   <div>
     <Row :gutter="20">
       <i-col span="12">
-        <Card title="iview-admin交流群(已满)" shadow>
+        <Card title="交流群1(火爆)" shadow>
           <img class="qq-group-img" :src="qqFans" alt="">
-          <p class="qq-group-intro">本群为使用iview-admin或者对iview-admin感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
+          <p class="qq-group-intro">本群为使用开源自动化（python tornado vue iview）感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
         </Card>
       </i-col>
       <i-col span="12">
-        <Card title="iview-admin交流群2" shadow>
+        <Card title="交流群2" shadow>
           <img class="qq-group-img" :src="qqFans2" alt="">
-          <p class="qq-group-intro">本群为使用iview-admin或者对iview-admin感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
+          <p class="qq-group-intro">本群为使用开源自动化（python tornado vue iview）感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
         </Card>
       </i-col>
     </Row>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import qqFans from '@/assets/images/qq-fance.jpg'
+import qqFans from '@/assets/images/qq-fance.png'
 import qqFans2 from '@/assets/images/qq-fance2.jpg'
 export default {
   name: 'join_page',

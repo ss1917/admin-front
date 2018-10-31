@@ -30,6 +30,14 @@ export const password = (data) => {
   })
 }
 
+export const register = (data) => {
+  return axios.request({
+    url: '/accounts/register/',
+    method: 'post',
+    data
+  })
+}
+
 export const getuserlist = (page, limit) => {
   return axios.request({
     url: '/mg/v2/accounts/user/',

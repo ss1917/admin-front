@@ -9,7 +9,7 @@
       :key="`${_uid}_${index}`"
       @click.native="handleFocus(item.name)"
     >
-      <component :is="item.type" :range="item.range" v-model="valueList[item.name]">
+      <component :is="item.type" :range="item.range" v-model="valueList[item.name]" :placeholder='item.placeholder ? item.placeholder : "" '>
         <template v-if="item.children">
           <component
             v-for="(child, i) in item.children.list"
@@ -90,7 +90,6 @@ export default {
       this.valueList = clonedeep(this.initValueList)
     },
     handleFocus (name) {
-      console.log('  ', name)
       this.errorStore[name] = ''
     }
   },

@@ -49,6 +49,7 @@ export default {
               type: 'i-input',
               value: '',
               label: 'SMTP主机',
+              placeholder: '请输入SMTP主机',
               rule: [
                 { required: true, message: 'SMTP主机不能为空', trigger: 'blur' }
               ]

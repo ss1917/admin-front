@@ -1,4 +1,4 @@
-import { login, authorization, password } from '@/api/user'
+import { login, authorization, password, register } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
 export default {
@@ -50,9 +50,11 @@ export default {
           next_url: nextUrl
         }).then(res => {
           const data = res.data
-          commit('setToken', data.auth_key)
-          commit('setUserName', data.username)
-          commit('setNickName', data.nickname)
+          if (data.code === 0) {
+            commit('setToken', data.auth_key)
+            commit('setUserName', data.username)
+            commit('setNickName', data.nickname)
+          }
           resolve(data)
         }).catch(err => {
           reject(err)
@@ -96,6 +98,17 @@ export default {
             commit('setToken', '')
             commit('setAccess', [])
           }
+          resolve(res.data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    handleRegister ({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        register(data).then(res => {
+          commit('setToken', '')
+          commit('setAccess', [])
           resolve(res.data)
         }).catch(error => {
           reject(error)
