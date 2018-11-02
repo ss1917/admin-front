@@ -39,6 +39,35 @@ export const routerMap = [
     ]
   },
   {
+    path: '/cron',
+    name: 'cron',
+    meta: {
+      icon: 'ios-alarm',
+      title: '定时任务'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'cronjobs',
+        name: 'cronjobs',
+        meta: {
+          icon: 'md-alarm',
+          title: '定时列表'
+        },
+        component: () => import('@/view/cron/cron-jobs.vue')
+      },
+      {
+        path: 'cronlogs',
+        name: 'cronlogs',
+        meta: {
+          icon: 'ios-list-box-outline',
+          title: '任务日志'
+        },
+        component: () => import('@/view/cron/cron-logs.vue')
+      }
+    ]
+  },
+  {
     path: '/usermanage',
     name: 'usermanage',
     meta: {

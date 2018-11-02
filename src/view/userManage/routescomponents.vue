@@ -300,7 +300,7 @@ export default {
         ]
       }
     },
-    // 删除角色
+    // 删除
     handleDelete (params, value) {
       if (confirm(`确定要删除?`)) {
         if (value === 'menu') {

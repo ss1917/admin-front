@@ -42,5 +42,8 @@ export default {
   menus: '菜单组件',
   systemmanage: '系统管理',
   system: '系统配置',
-  systemlog: '系统日志'
+  systemlog: '系统日志',
+  cron: '定时任务',
+  cronjobs: '定时列表',
+  cronlogs: '任务日志'
 }
