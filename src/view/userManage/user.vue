@@ -1,13 +1,17 @@
 <template>
   <div>
     <Card>
-      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns"  @on-delete="handleDelete" @on-save-edit="handleInput">
+      <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns"
+       @on-delete="handleDelete" @on-save-edit="handleInput"
+       @on-search-table="handleSearchTable"
+       @on-selection-change="handleSelectChange">
         <div slot="new_btn" class="search-con search-col">
-          <Button type="info" class="search-btn"  @click="showModal">新建用户</Button>
+          <Button v-if="rules.new_user_btn" type="info" class="search-btn"  @click="showModal">新建用户</Button>
+          <Button v-if="rules.reset_pwd_btn" type="error" class="search-btn"  @click="handleResetPWD">重置密码</Button>
+          <Button v-if="rules.reset_mfa_btn" type="error" class="search-btn"  @click="handleResetMFA">重置MFA</Button>
         </div>
       </tables>
-      <br/>
-      <div style="margin: 0px;overflow: hidden">
+      <div style="margin: 10px; overflow: hidden">
         <div style="float: left;">
             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" :page-size-opts=[10,15,25,35,50,100] show-sizer show-total @on-change="changePage" @on-page-size-change="handlePageSize"></Page>
         </div>
@@ -22,12 +26,15 @@
 <script>
 import Tables from '_c/tables'
 import FormGroup from '_c/form-group'
+import { mapState } from 'vuex'
 import {
   getuserlist,
   newuser,
   deluser,
   updateuser,
-  patchuser
+  patchuser,
+  resetMFA,
+  resetPassword
 } from '@/api/user'
 export default {
   components: {
@@ -116,7 +123,7 @@ export default {
         }
       ],
       columns: [
-        // {type: 'selection', title: '',  key: '', width: 60,align: 'center'},
+        { type: 'selection', title: '', key: '', width: 60, align: 'center' },
         { title: '用户名', key: 'username', sortable: true },
         { title: '昵称', key: 'nickname', sortable: true },
         { title: '部门', key: 'department', editable: true },
@@ -200,45 +207,65 @@ export default {
           ]
         }
       ],
+      // 搜索数据
+      searchKey: '',
+      searchValue: '',
       // 分页数据
       tableData: [],
       pageTotal: 0, // 数据总数
       pageNum: 1, // 当前页码
-      pageSize: 15 // 每页条数
+      pageSize: 15, // 每页条数
+      // select
+      selectionList: []
     }
+  },
+  computed: {
+    ...mapState({
+      rules: state => state.user.rules
+    })
   },
   methods: {
     handleDelete (params) {
-      deluser({ user_id: params.row.user_id })
-        .then(res => {
-          if (res.data.code === 0) {
-            this.$Message.success(`${res.data.msg}`)
-            // this.pageTotal = res.data.count;
-          } else {
-            this.$Message.error(`${res.data.msg}`)
-          }
-        })
-        .catch(err => {
-          this.$Message.error(err)
-        })
+      deluser({ user_id: params.row.user_id }).then(res => {
+        if (res.data.code === 0) {
+          this.$Message.success(`${res.data.msg}`)
+        } else {
+          this.$Message.error(`${res.data.msg}`)
+        }
+      })
     },
     changePage (value) {
       this.pageNum = value
-      this.getUserList(this.pageNum, this.pageSize)
+      this.getUserList(
+        this.pageNum,
+        this.pageSize,
+        this.searchKey,
+        this.searchValue
+      )
     },
     // 每页条数
     handlePageSize (value) {
       this.pageSize = value
-      this.getUserList(1, this.pageSize)
+      this.getUserList(1, this.pageSize, this.searchKey, this.searchValue)
     },
     exportExcel () {
       this.$refs.tables.exportCsv({
         filename: `table-${new Date().valueOf()}.csv`
       })
     },
+    handleSearchTable (key, val) {
+      this.searchKey = key
+      this.searchValue = val
+      this.getUserList(
+        this.pageNum,
+        this.pageSize,
+        this.searchKey,
+        this.searchValue
+      )
+    },
     // 获取用户列表
-    getUserList (page, limit) {
-      getuserlist(page, limit).then(res => {
+    getUserList (page, limit, key, value) {
+      getuserlist(page, limit, key, value).then(res => {
         if (res.data.code === 0) {
           this.$Message.success(`${res.data.msg}`)
           this.pageTotal = res.data.count
@@ -299,6 +326,43 @@ export default {
           this.$Message.error(`${res.data.msg}`)
         }
       })
+    },
+    handleSelectChange (val) {
+      let userList = []
+      val.forEach(item => {
+        user_list.push(item.user_id)
+      })
+      this.selectionList = userList
+    },
+    handleResetPWD () {
+      if (!this.selectionList.length) {
+        this.$Message.error('你选中了个锤子')
+      } else {
+        if (confirm(`确定要重置选用户的密码`)) {
+          resetPassword({ user_list: this.selectionList }).then(res => {
+            if (res.data.code === 0) {
+              this.$Message.success(`${res.data.msg}`)
+            } else {
+              this.$Message.error(`${res.data.msg}`)
+            }
+          })
+        }
+      }
+    },
+    handleResetMFA () {
+      if (!this.selectionList.length) {
+        this.$Message.error('你选中了个锤子')
+      } else {
+        if (confirm(`确定要重置选中用户的MFA`)) {
+          resetMFA({ user_list: this.selectionList }).then(res => {
+            if (res.data.code === 0) {
+              this.$Message.success(`${res.data.msg}`)
+            } else {
+              this.$Message.error(`${res.data.msg}`)
+            }
+          })
+        }
+      }
     }
   },
   mounted () {
@@ -313,7 +377,7 @@ export default {
   .search {
     &-col {
       display: inline-block;
-      width: 200px;
+      width: 300px;
     }
     &-input {
       display: inline-block;

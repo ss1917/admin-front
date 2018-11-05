@@ -210,13 +210,15 @@ export default {
       })
     },
     setDefaultSearchKey () {
-      this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
+      this.searchKey = this.columns[0].key && this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
     },
     handleClear (e) {
       if (e.target.value === '') this.insideTableData = this.value
     },
+    // 改为注册事件
     handleSearch () {
-      this.insideTableData = this.insideTableData.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
+      this.$emit('on-search-table', this.searchKey, this.searchValue)
+      // this.insideTableData = this.insideTableData.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
     },
     handleTableData () {
       this.insideTableData = this.value.map((item, index) => {
@@ -269,7 +271,6 @@ export default {
     },
     value (val) {
       this.handleTableData()
-      this.handleSearch()
     }
   },
   mounted () {

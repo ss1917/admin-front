@@ -38,13 +38,15 @@ export const register = (data) => {
   })
 }
 
-export const getuserlist = (page, limit) => {
+export const getuserlist = (page, limit, key, value) => {
   return axios.request({
     url: '/mg/v2/accounts/user/',
     method: 'get',
     params: {
       page,
-      limit
+      limit,
+      key,
+      value
     }
   })
 }
@@ -80,15 +82,32 @@ export const patchuser = (data) => {
     data
   })
 }
+// reset
+export const resetMFA = (data) => {
+  return axios.request({
+    url: '/mg/v2/accounts/reset_mfa/',
+    method: 'put',
+    data
+  })
+}
 
+export const resetPassword = (data) => {
+  return axios.request({
+    url: '/mg/v2/accounts/reset_pw/',
+    method: 'put',
+    data
+  })
+}
 // role
-export const getrolelist = (page, limit) => {
+export const getrolelist = (page, limit, key, value) => {
   return axios.request({
     url: '/mg/v2/accounts/role/',
     method: 'get',
     params: {
       page,
-      limit
+      limit,
+      key,
+      value
     }
   })
 }

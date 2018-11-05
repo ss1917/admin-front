@@ -4,7 +4,7 @@
     <div class="split">
         <Split v-model="offset">
           <div slot="left" class="split-pane">
-              <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns">
+              <tables ref="tables" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-search-table="handleSearchTable">
               <div slot="new_btn" class="search-con search-col">
               <Button type="info" class="search-btn"  @click="showModal">新建</Button>
               </div>
@@ -68,6 +68,9 @@ export default {
   },
   data () {
     return {
+      // 搜索
+      searchKey: '',
+      searchValue: '',
       // 分割
       offset: 0.5,
       //
@@ -234,8 +237,8 @@ export default {
   },
   methods: {
     // 获取角色列表
-    getRoleList (page, limit) {
-      getrolelist(page, limit).then(res => {
+    getRoleList (page, limit, key, value) {
+      getrolelist(page, limit, key, value).then(res => {
         if (res.data.code === 0) {
           this.$Message.success(`${res.data.msg}`)
           this.pageTotal = res.data.count
@@ -275,6 +278,16 @@ export default {
           }
         })
       }, 1000)
+    },
+    handleSearchTable (key, val) {
+      this.searchKey = key
+      this.searchValue = val
+      this.getRoleList(
+        this.pageNum,
+        this.pageSize,
+        this.searchKey,
+        this.searchValue
+      )
     },
     // 弹出对话框
     showModal () {
@@ -359,7 +372,6 @@ export default {
       getComponentByRole(value).then(res => {
         if (res.data.code === 0) {
           res.data.data.forEach(item => {
-            console.log(item)
             targetData.push(item.comp_id.toString())
           })
           this.targetKeys = targetData

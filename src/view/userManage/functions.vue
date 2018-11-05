@@ -220,19 +220,21 @@ export default {
     },
     // 删除
     delData (params) {
-      operationFunc(
-        {
-          func_id: params.row.func_id
-        },
-        'delete'
-      ).then(res => {
-        if (res.data.code === 0) {
-          this.$Message.success(`${res.data.msg}`)
-          this.tableData.splice(params.index, 1)
-        } else {
-          this.$Message.error(`${res.data.msg}`)
-        }
-      })
+      if (confirm(`确定要删除权限 ${params.row.func_name}`)) {
+        operationFunc(
+          {
+            func_id: params.row.func_id
+          },
+          'delete'
+        ).then(res => {
+          if (res.data.code === 0) {
+            this.$Message.success(`${res.data.msg}`)
+            this.tableData.splice(params.index, 1)
+          } else {
+            this.$Message.error(`${res.data.msg}`)
+          }
+        })
+      }
     },
     // 调用开关
     onSwitch (params) {
