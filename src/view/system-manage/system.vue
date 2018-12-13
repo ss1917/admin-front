@@ -56,7 +56,12 @@ export default {
         },
         { label: '邮箱登录', icon: 'md-mail', name: 'EMAILLOGIN' },
         { label: '存储配置', icon: 'md-folder', name: 'STORAGE' },
-        { label: '核心设置', icon: 'ios-settings', name: 'centerSetting', disabled: true }
+        {
+          label: '核心设置',
+          icon: 'ios-settings',
+          name: 'centerSetting',
+          disabled: true
+        }
       ],
       formList: [],
       CONFIG_DATA: {
@@ -362,7 +367,8 @@ export default {
               value: this.CONFIG_DATA.EMAILLOGIN_SERVER,
               label: '邮箱SMTP',
               maxlength: 80,
-              placeholder: '${EMAILLOGIN_SERVER} 请输入所用邮箱的SMTP地址，我们使用此地址来验证邮箱例如：smtp.exmail.qq.com',
+              placeholder:
+                '${EMAILLOGIN_SERVER} 请输入所用邮箱的SMTP地址，我们使用此地址来验证邮箱例如：smtp.exmail.qq.com',
               rule: [
                 {
                   required: true,

@@ -262,7 +262,7 @@ export const routerMap = [
           icon: 'ios-people',
           title: '用户列表'
         },
-        component: () => import('@/view/usermanage/user.vue')
+        component: () => import('@/view/user-manage/user.vue')
       },
       {
         path: 'functions',
@@ -271,7 +271,7 @@ export const routerMap = [
           icon: 'ios-lock',
           title: '权限列表'
         },
-        component: () => import('@/view/usermanage/functions.vue')
+        component: () => import('@/view/user-manage/functions.vue')
       },
       {
         path: 'menus',
@@ -280,7 +280,7 @@ export const routerMap = [
           icon: 'ios-menu',
           title: '菜单组件'
         },
-        component: () => import('@/view/usermanage/routescomponents.vue')
+        component: () => import('@/view/user-manage/routescomponents.vue')
       },
       {
         path: 'role',
@@ -289,7 +289,7 @@ export const routerMap = [
           icon: 'ios-person',
           title: '角色管理'
         },
-        component: () => import('@/view/usermanage/role.vue')
+        component: () => import('@/view/user-manage/role.vue')
       }
     ]
   },
