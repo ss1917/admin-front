@@ -4,14 +4,14 @@
     <div class="split">
       <Split v-model="offset">
         <div slot="left" class="split-pane">
-          <tables ref="tables" :height="600" editable searchable search-place="top" v-model="tableData" :columns="columns">
+          <tables ref="tables" :height="600" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-search-table="handleSearchTable">
             <div slot="new_btn" class="search-con search-col">
               <Button type="info" class="search-btn"  @click="showModal('', 'menu', 'post', '添加菜单')">添加菜单</Button>
             </div>
           </tables>
        </div>
         <div slot="right" class="split-pane">
-           <tables ref="tables" :height="600" editable searchable search-place="top" v-model="tableData1" :columns="columns1">
+           <tables ref="tables" :height="600" editable searchable search-place="top" v-model="tableData1" :columns="columns1"  @on-search-table="handleSearchTable1">
             <div slot="new_btn" class="search-con search-col">
               <Button type="info" class="search-btn"  @click="showModal('', 'component', 'post', '添加组件')">添加组件</Button>
             </div>
@@ -217,8 +217,8 @@ export default {
   },
   methods: {
     // 获取菜单列表
-    getMenusList () {
-      getMenuslist().then(res => {
+    getMenusList (key, value) {
+      getMenuslist(key, value).then(res => {
         if (res.data.code === 0) {
           this.tableData = res.data.data
         } else {
@@ -227,8 +227,8 @@ export default {
       })
     },
     // 获取组件列表
-    getComponentsList () {
-      getComponentslist().then(res => {
+    getComponentsList (key, value) {
+      getComponentslist(key, value).then(res => {
         if (res.data.code === 0) {
           this.tableData1 = res.data.data
         } else {
@@ -327,6 +327,12 @@ export default {
           this.$Message.error('你在删除个锤子啊')
         }
       }
+    },
+    handleSearchTable (key, val) {
+      this.getMenusList(key, val)
+    },
+    handleSearchTable1 (key, val) {
+      this.getComponentsList(key, val)
     },
     // 调用开关
     onSwitch (params, value) {

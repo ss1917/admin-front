@@ -269,6 +269,7 @@ export default {
       if (e.target.value === '') this.tableData = this.value
     },
     handleSearch () {
+      this.pageNum = 1
       this.getFuncsList(
         this.pageNum,
         this.pageSize,

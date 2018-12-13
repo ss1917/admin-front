@@ -9,7 +9,10 @@
       :key="`${_uid}_${index}`"
       @click.native="handleFocus(item.name)"
     >
-      <component :is="item.type" :range="item.range" v-model="valueList[item.name]" :placeholder='item.placeholder ? item.placeholder : "" '>
+      <component :is="item.type" :range="item.range" v-model="valueList[item.name]"
+      :placeholder='item.placeholder ? item.placeholder : "" '
+      :maxlength='item.type === "i-input" && item.maxlength ? item.maxlength : 50 '
+      :type='item.type === "i-input" && item.type1 ? item.type1 : "text" '>
         <template v-if="item.children">
           <component
             v-for="(child, i) in item.children.list"
@@ -21,8 +24,10 @@
       </component>
     </FormItem>
     <FormItem>
+      <slot name="right-btn"></slot>
       <Button @click="handleSubmit" type="primary" :loading="loading">提交</Button>
       <Button @click="handleReset" style="margin-left: 8px">重置</Button>
+      <slot name="left-btn"></slot>
     </FormItem>
   </Form>
 </template>
@@ -47,7 +52,7 @@ export default {
     },
     labelWidth: {
       type: Number,
-      default: 100
+      default: 110
     }
   },
   watch: {

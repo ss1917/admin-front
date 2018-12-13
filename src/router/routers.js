@@ -39,259 +39,67 @@ export const routerMap = [
     ]
   },
   {
-    path: '/cron',
-    name: 'cron',
+    path: '/order',
+    name: 'order',
     meta: {
-      icon: 'ios-alarm',
-      title: '定时任务'
+      icon: 'ios-menu',
+      title: '订单列表'
     },
     component: Main,
     children: [
       {
-        path: 'cronjobs',
-        name: 'cronjobs',
+        path: 'taskOrderList',
+        name: 'taskOrderList',
         meta: {
-          icon: 'md-alarm',
-          title: '定时列表'
+          icon: 'md-reorder',
+          title: '任务订单'
         },
-        component: () => import('@/view/cron/cron-jobs.vue')
+        component: () => import('@/view/task-order/task-order-list.vue')
       },
       {
-        path: 'cronlogs',
-        name: 'cronlogs',
-        meta: {
-          icon: 'ios-list-box-outline',
-          title: '任务日志'
-        },
-        component: () => import('@/view/cron/cron-logs.vue')
-      }
-    ]
-  },
-  {
-    path: '/usermanage',
-    name: 'usermanage',
-    meta: {
-      icon: 'md-contacts',
-      title: '用户管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'user',
-        name: 'user',
-        meta: {
-          icon: 'ios-people',
-          title: '用户列表'
-        },
-        component: () => import('@/view/userManage/user.vue')
-      },
-      {
-        path: 'functions',
-        name: 'functions',
-        meta: {
-          icon: 'ios-lock',
-          title: '权限列表'
-        },
-        component: () => import('@/view/userManage/functions.vue')
-      },
-      {
-        path: 'menus',
-        name: 'menus',
-        meta: {
-          icon: 'ios-menu',
-          title: '菜单组件'
-        },
-        component: () => import('@/view/userManage/routescomponents.vue')
-      },
-      {
-        path: 'role',
-        name: 'role',
-        meta: {
-          icon: 'ios-person',
-          title: '角色管理'
-        },
-        component: () => import('@/view/userManage/role.vue')
-      }
-    ]
-  },
-  {
-    path: '/systemmanage',
-    name: 'systemmanage',
-    meta: {
-      icon: 'md-settings',
-      title: '系统管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'system',
-        name: 'system',
-        meta: {
-          icon: 'ios-settings',
-          title: '系统配置'
-        },
-        component: () => import('@/view/systemManage/system.vue')
-      },
-      {
-        path: 'systemlog',
-        name: 'systemlog',
-        meta: {
-          icon: 'ios-paper',
-          title: '系统日志'
-        },
-        component: () => import('@/view/systemManage/systemlog.vue')
-      }
-    ]
-  },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      icon: 'logo-buffer',
-      title: '组件'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'count_to_page',
-        name: 'count_to_page',
-        meta: {
-          icon: 'md-trending-up',
-          title: '数字渐变'
-        },
-        component: () => import('@/view/components/count-to/count-to.vue')
-      },
-      {
-        path: 'drag_list_page',
-        name: 'drag_list_page',
-        meta: {
-          icon: 'ios-infinite',
-          title: '拖拽列表'
-        },
-        component: () => import('@/view/components/drag-list/drag-list.vue')
-      },
-      {
-        path: 'tables_page',
-        name: 'tables_page',
-        meta: {
-          icon: 'md-grid',
-          title: '多功能表格'
-        },
-        component: () => import('@/view/components/tables/tables.vue')
-      },
-      {
-        path: 'split_pane_page',
-        name: 'split_pane_page',
-        meta: {
-          icon: 'md-pause',
-          title: '分割窗口'
-        },
-        component: () => import('@/view/components/split-pane/split-pane.vue')
-      },
-      {
-        path: 'markdown_page',
-        name: 'markdown_page',
-        meta: {
-          icon: 'logo-markdown',
-          title: 'Markdown编辑器'
-        },
-        component: () => import('@/view/components/markdown/markdown.vue')
-      },
-      {
-        path: 'editor_page',
-        name: 'editor_page',
-        meta: {
-          icon: 'ios-create',
-          title: '富文本编辑器'
-        },
-        component: () => import('@/view/components/editor/editor.vue')
-      },
-      {
-        path: 'icons_page',
-        name: 'icons_page',
-        meta: {
-          icon: '_bear',
-          title: '自定义图标'
-        },
-        component: () => import('@/view/components/icons/icons.vue')
-      }
-    ]
-  },
-  {
-    path: '/update',
-    name: 'update',
-    meta: {
-      icon: 'md-cloud-upload',
-      title: '数据上传'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'update_table_page',
-        name: 'update_table_page',
-        meta: {
-          icon: 'ios-document',
-          title: '上传Csv'
-        },
-        component: () => import('@/view/update/update-table.vue')
-      },
-      {
-        path: 'update_paste_page',
-        name: 'update_paste_page',
-        meta: {
-          icon: 'md-clipboard',
-          title: '粘贴表格数据'
-        },
-        component: () => import('@/view/update/update-paste.vue')
-      }
-    ]
-  },
-  {
-    path: '/excel',
-    name: 'excel',
-    meta: {
-      icon: 'ios-stats',
-      title: 'EXCEL导入导出'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'upload-excel',
-        name: 'upload-excel',
+        path: 'publishApp',
+        name: 'publishApp',
         meta: {
           icon: 'md-add',
-          title: '导入EXCEL'
+          title: '发布应用'
         },
-        component: () => import('@/view/excel/upload-excel.vue')
+        component: () => import('@/view/task-order/publish-app.vue')
       },
       {
-        path: 'export-excel',
-        name: 'export-excel',
+        path: 'mysqlAudit',
+        name: 'mysqlAudit',
         meta: {
-          icon: 'md-download',
-          title: '导出EXCEL'
+          icon: 'ios-help-circle',
+          title: 'SQL审核'
         },
-        component: () => import('@/view/excel/export-excel.vue')
-      }
-    ]
-  },
-  {
-    path: '/tools_methods',
-    name: 'tools_methods',
-    meta: {
-      hide: true
-    },
-    component: Main,
-    children: [
+        component: () => import('@/view/task-order/publish-app.vue')
+      },
       {
-        path: 'tools_methods_page',
-        name: 'tools_methods_page',
+        path: 'mysqlOptimize',
+        name: 'mysqlOptimize',
         meta: {
-          icon: 'ios-hammer',
-          title: '工具方法',
-          beforeCloseName: 'before_close_normal'
+          icon: 'md-alarm',
+          title: 'SQL优化'
         },
-        component: () => import('@/view/tools-methods/tools-methods.vue')
+        component: () => import('@/view/task-order/publish-app.vue')
+      },
+      {
+        path: 'resourceApplication',
+        name: 'resourceApplication',
+        meta: {
+          icon: 'md-alarm',
+          title: '资源申请'
+        },
+        component: () => import('@/view/task-order/publish-app.vue')
+      },
+      {
+        path: 'customTasks',
+        name: 'customTasks',
+        meta: {
+          icon: 'md-alarm',
+          title: '自定义任务'
+        },
+        component: () => import('@/view/task-order/publish-app.vue')
       }
     ]
   },
@@ -315,33 +123,41 @@ export const routerMap = [
     ]
   },
   {
-    path: '/directive',
-    name: 'directive',
+    path: '/operation_center',
+    name: 'operation_center',
     meta: {
-      hide: true
+      icon: 'md-boat',
+      title: '作业配置'
     },
     component: Main,
     children: [
       {
-        path: 'directive_page',
-        name: 'directive_page',
+        path: 'publishConfig',
+        name: 'publishConfig',
         meta: {
-          icon: 'ios-navigate',
-          title: '指令'
+          icon: 'md-funnel',
+          title: '发布配置'
         },
-        component: () => import('@/view/directive/directive.vue')
-      }
-    ]
-  },
-  {
-    path: '/multilevel',
-    name: 'multilevel',
-    meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
-    },
-    component: Main,
-    children: [
+        component: () => import('@/view/tasks-config-center/publish-config.vue')
+      },
+      {
+        path: 'codeRepository',
+        name: 'codeRepository',
+        meta: {
+          icon: 'logo-github',
+          title: '代码仓库'
+        },
+        component: () => import('@/view/tasks-config-center/code-repository.vue')
+      },
+      {
+        path: 'dockerRegistry',
+        name: 'dockerRegistry',
+        meta: {
+          icon: 'ios-boat',
+          title: '镜像仓库'
+        },
+        component: () => import('@/view/tasks-config-center/docker-registry.vue')
+      },
       {
         path: 'level_2_1',
         name: 'level_2_1',
@@ -352,66 +168,157 @@ export const routerMap = [
         component: () => import('@/view/multilevel/level-2-1.vue')
       },
       {
-        path: 'level_2_2',
-        name: 'level_2_2',
+        path: '/cron',
+        name: 'cron',
         meta: {
-          access: ['super_admin'],
-          icon: 'md-funnel',
-          showAlways: true,
-          title: '二级-2'
+          icon: 'ios-alarm',
+          title: '定时任务'
         },
         component: parentView,
         children: [
           {
-            path: 'level_2_2_1',
-            name: 'level_2_2_1',
+            path: 'cronjobs',
+            name: 'cronjobs',
             meta: {
-              icon: 'md-funnel',
-              title: '三级'
+              icon: 'md-alarm',
+              title: '定时列表'
             },
-            component: () => import('@/view/multilevel/level-2-2/level-3-1.vue')
+            component: () => import('@/view/cron/cron-jobs.vue')
+          },
+          {
+            path: 'cronlogs',
+            name: 'cronlogs',
+            meta: {
+              icon: 'ios-list-box-outline',
+              title: '任务日志'
+            },
+            component: () => import('@/view/cron/cron-logs.vue')
           }
         ]
       },
+      // {
+      //   path: 'task_layout',
+      //   name: 'task_layout',
+      //   meta: {
+      //     icon: 'md-planet',
+      //     showAlways: true,
+      //     title: '模板配置'
+      //   },
+      //   component: parentView,
+      //   children: [
       {
-        path: 'level_2_3',
-        name: 'level_2_3',
+        path: 'commandlist',
+        name: 'commandlist',
         meta: {
-          icon: 'md-funnel',
-          title: '二级-3'
+          icon: 'ios-list-box',
+          title: '命令管理'
         },
-        component: () => import('@/view/multilevel/level-2-3.vue')
+        component: () => import('@/view/scheduler/command-list.vue')
+      },
+      {
+        path: 'templist',
+        name: 'templist',
+        meta: {
+          icon: 'ios-cafe',
+          title: '模板管理'
+        },
+        component: () => import('@/view/scheduler/task-template.vue')
+      },
+      {
+        path: 'argslist',
+        name: 'argslist',
+        meta: {
+          icon: 'ios-medical-outline',
+          title: '参数管理'
+        },
+        component: () => import('@/view/scheduler/args-list.vue')
+      },
+      {
+        path: 'taskuser',
+        name: 'taskuser',
+        meta: {
+          icon: 'ios-happy',
+          title: '执行用户'
+        },
+        component: () => import('@/view/scheduler/task-user.vue')
       }
     ]
+    //   }
+    // ]
   },
   {
-    path: '/argu',
-    name: 'argu',
+    path: '/usermanage',
+    name: 'usermanage',
     meta: {
-      hideInMenu: true
+      icon: 'md-contacts',
+      title: '用户管理'
     },
     component: Main,
     children: [
       {
-        path: 'params/:id',
-        name: 'params',
+        path: 'user',
+        name: 'user',
         meta: {
-          icon: 'md-flower',
-          title: route => `动态路由-${route.params.id}`,
-          notCache: true,
-          beforeCloseName: 'before_close_normal'
+          icon: 'ios-people',
+          title: '用户列表'
         },
-        component: () => import('@/view/argu-page/params.vue')
+        component: () => import('@/view/usermanage/user.vue')
       },
       {
-        path: 'query',
-        name: 'query',
+        path: 'functions',
+        name: 'functions',
         meta: {
-          icon: 'md-flower',
-          title: route => `带参路由-${route.query.id}`,
-          notCache: true
+          icon: 'ios-lock',
+          title: '权限列表'
         },
-        component: () => import('@/view/argu-page/query.vue')
+        component: () => import('@/view/usermanage/functions.vue')
+      },
+      {
+        path: 'menus',
+        name: 'menus',
+        meta: {
+          icon: 'ios-menu',
+          title: '菜单组件'
+        },
+        component: () => import('@/view/usermanage/routescomponents.vue')
+      },
+      {
+        path: 'role',
+        name: 'role',
+        meta: {
+          icon: 'ios-person',
+          title: '角色管理'
+        },
+        component: () => import('@/view/usermanage/role.vue')
+      }
+    ]
+  },
+  {
+    path: '/systemmanage',
+    name: 'systemmanage',
+    meta: {
+      icon: 'md-settings',
+      title: '系统管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'system',
+        name: 'system',
+        meta: {
+          icon: 'ios-settings',
+          title: '系统配置'
+        },
+        component: () => import('@/view/system-manage/system.vue')
+      },
+      {
+        path: 'systemlog',
+        name: 'systemlog',
+        meta: {
+          icon: 'ios-paper',
+          title: '系统日志'
+        },
+        component: () => import('@/view/system-manage/systemlog.vue')
       }
     ]
   }
@@ -454,12 +361,12 @@ export const routes = [
     ]
   },
   {
-    path: '/401',
-    name: 'error_401',
+    path: '/403',
+    name: 'error_403',
     meta: {
       hideInMenu: true
     },
-    component: () => import('@/view/error-page/401.vue')
+    component: () => import('@/view/error-page/403.vue')
   },
   {
     path: '/500',

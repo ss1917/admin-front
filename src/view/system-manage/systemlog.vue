@@ -27,7 +27,7 @@ export default {
           title: '用户名',
           key: 'username',
           align: 'center',
-          width: 100,
+          width: 120,
           sortable: true
         },
         {

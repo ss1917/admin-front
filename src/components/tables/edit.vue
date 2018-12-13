@@ -1,7 +1,8 @@
 <template>
   <div class="tables-edit-outer">
     <div v-if="!isEditting" class="tables-edit-con">
-      <span class="value-con">{{ value }}</span>
+      <span v-if="value" class="value-con">{{ value }}</span>
+      <span v-else class="value-con">.</span>
       <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button>
     </div>
     <div v-else class="tables-editting-con">
@@ -66,7 +67,8 @@ export default {
   }
   .tables-editting-con{
     .tables-edit-input{
-      width: ~"calc(100% - 50px)";
+      // width: ~"calc(100% - 50px)";
+      width: ~"calc(100%)";
     }
   }
 }

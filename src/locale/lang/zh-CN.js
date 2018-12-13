@@ -43,7 +43,24 @@ export default {
   systemmanage: '系统管理',
   system: '系统配置',
   systemlog: '系统日志',
+  operation_center: '作业配置',
   cron: '定时任务',
   cronjobs: '定时列表',
-  cronlogs: '任务日志'
+  cronlogs: '任务日志',
+  task_layout: '任务模板',
+  commandlist: '命令管理',
+  templist: '模板管理',
+  argslist: '参数管理',
+  taskuser: '执行用户',
+  publishConfig: '发布配置',
+  codeRepository: '代码仓库',
+  dockerRegistry: '镜像仓库',
+  order: '订单中心',
+  taskOrderList: '订单列表',
+  publishApp: '应用发布',
+  mysqlAudit: 'SQL审核',
+  mysqlOptimize: 'SQL优化',
+  resourceApplication: '资源申请',
+  customTasks: '自定义任务'
+
 }

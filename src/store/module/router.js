@@ -38,7 +38,7 @@ const actions = {
           routerList = getAccesRouterList(routerMap, rules)
         }
         commit('CONCAT_ROUTES', routerList)
-        resolve(state.routers)
+        resolve(routerList)
       } catch (err) {
         reject(err)
       }

@@ -178,10 +178,14 @@ export const operationRoleFunc = (data, meth) => {
   })
 }
 // 获取用户前端菜单
-export const getMenuslist = () => {
+export const getMenuslist = (key, value) => {
   return axios.request({
     url: '/mg/v2/accounts/menus/',
-    method: 'get'
+    method: 'get',
+    params: {
+      key,
+      value
+    }
   })
 }
 
@@ -211,10 +215,14 @@ export const operationRoleMenu = (data, meth) => {
   })
 }
 // 组件
-export const getComponentslist = () => {
+export const getComponentslist = (key, value) => {
   return axios.request({
     url: '/mg/v2/accounts/components/',
-    method: 'get'
+    method: 'get',
+    params: {
+      key,
+      value
+    }
   })
 }
 

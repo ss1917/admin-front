@@ -1,6 +1,6 @@
 import axios from 'axios'
-// import store from '@/store'
 import { Message } from 'iview'
+// import { router } from '@/router'
 
 class HttpRequest {
   constructor (baseUrl = baseURL) {
@@ -41,12 +41,20 @@ class HttpRequest {
       return { data, status }
     }, error => {
       this.destroy(url)
-      // 拦截异常，提示
-      Message.error({
-        content: error.response.data,
-        duration: 8,
-        closable: true
-      })
+      if (error.response.status === '401') {
+        router.router.replace('/login')
+        location.reload()
+      } else if (error.response.status === '403') {
+        router.router.replace('/403')
+      } else if (error.response.status === '500') {
+        router.router.replace('/500')
+      } else {
+        Message.error({
+          content: error.response.data,
+          duration: 8,
+          closable: true
+        })
+      }
       return Promise.reject(error)
     })
   }

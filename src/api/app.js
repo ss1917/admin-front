@@ -14,3 +14,28 @@ export const getLoglist = (page, limit, key, value, date = ['', '']) => {
     }
   })
 }
+
+// 系统配置项
+// 发布应用选择
+export const getSysconfig = (value) => {
+  return axios.request({
+    url: `/mg/v2/sysconfig/settings/${value}/`,
+    method: 'get'
+  })
+}
+
+export const operationSysconfig = (data, meth) => {
+  return axios.request({
+    url: '/mg/v2/sysconfig/settings/set/',
+    method: 'post',
+    data
+  })
+}
+// 检查配置
+export const CheckSysconfig = (data) => {
+  return axios.request({
+    url: '/mg/v2/sysconfig/check/',
+    method: 'post',
+    data
+  })
+}

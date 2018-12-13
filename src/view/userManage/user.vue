@@ -128,8 +128,6 @@ export default {
         { title: '昵称', key: 'nickname', sortable: true },
         { title: '部门', key: 'department', editable: true },
         { title: '手机', key: 'tel', editable: true },
-        { title: '微信', key: 'wechat', editable: true },
-        { title: '工号', key: 'no' },
         { title: '邮箱', key: 'email' },
         { title: '登录IP', key: 'last_ip' },
         {
@@ -254,6 +252,7 @@ export default {
       })
     },
     handleSearchTable (key, val) {
+      this.pageNum = 1
       this.searchKey = key
       this.searchValue = val
       this.getUserList(
@@ -330,7 +329,7 @@ export default {
     handleSelectChange (val) {
       let userList = []
       val.forEach(item => {
-        user_list.push(item.user_id)
+        userList.push(item.user_id)
       })
       this.selectionList = userList
     },
