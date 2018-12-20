@@ -123,7 +123,135 @@ export const routerMap = [
     ]
   },
   //
-
+  {
+    path: '/k8s',
+    name: 'k8s',
+    meta: {
+      icon: 'md-menu',
+      title: 'K8S发布'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'project/',
+        name: 'project',
+        meta: {
+          icon: 'md-menu',
+          title: '项目列表'
+        },
+        component: () => import('@/view/k8s/project/List.vue')
+      },
+      {
+        path: 'app/',
+        name: 'app',
+        meta: {
+          icon: 'md-menu',
+          title: '应用列表'
+        },
+        component: () => import('@/view/k8s/app/List.vue')
+      },
+      {
+        path: 'publish/:id',
+        name: 'project_publish',
+        meta: {
+          hideInMenu: true
+        },
+        component: () => import('@/view/k8s/project/Publish.vue')
+      },
+      {
+        path: '/',
+        name: 'publish_list',
+        meta: {
+          icon: 'md-menu',
+          title: '发布列表'
+        },
+        component: () => import('@/view/k8s/publish/List.vue')
+      }
+    ]
+  },
+  {
+    path: '/terminal',
+    name: 'WebSSH',
+    meta: {
+      title: 'WebSSH',
+      hideInMenu: true
+    },
+    component: () => import('@/view/cmdb/webssh/WebSSH.vue')
+  },
+  {
+    path: '/record',
+    name: 'SshRecord',
+    meta: {
+      title: '操作回放',
+      hideInMenu: true
+    },
+    component: () => import('@/view/cmdb/webssh/Record.vue')
+  },
+  {
+    path: '/cmdb',
+    name: 'cmdb',
+    meta: {
+      icon: 'md-menu',
+      title: '资产管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'server',
+        name: 'server_list',
+        meta: {
+          icon: 'md-menu',
+          title: '主机管理'
+        },
+        component: () => import('@/view/cmdb/server/List.vue')
+      },
+      {
+        path: 'server_log',
+        name: 'server_log',
+        meta: {
+          icon: 'md-menu',
+          title: '日志审计'
+        },
+        component: () => import('@/view/cmdb/server_log/List.vue')
+      },
+      {
+        path: 'server_auth',
+        name: 'server_auth',
+        meta: {
+          icon: 'md-menu',
+          title: '授权规则'
+        },
+        component: () => import('@/view/cmdb/server_auth/List.vue')
+      },
+      {
+        path: 'server_group',
+        name: 'server_group',
+        meta: {
+          icon: 'md-menu',
+          title: '主机组'
+        },
+        component: () => import('@/view/cmdb/server_group/List.vue')
+      },
+      {
+        path: 'tag',
+        name: 'tag',
+        meta: {
+          icon: 'md-menu',
+          title: '标签管理'
+        },
+        component: () => import('@/view/cmdb/tag/List.vue')
+      },
+      {
+        path: 'adm_user',
+        name: 'adm_user',
+        meta: {
+          icon: 'md-menu',
+          title: '管理用户'
+        },
+        component: () => import('@/view/cmdb/adm_user/List.vue')
+      }
+    ]
+  },
   //
   {
     path: '/operation_center',
@@ -169,7 +297,7 @@ export const routerMap = [
           title: '二级-1'
         },
         component: () => import('@/view/multilevel/level-2-1.vue')
-      },
+      }
     ]
   },
   {

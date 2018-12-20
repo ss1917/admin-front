@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'iview'
-import Vue from 'vue';
+import Vue from 'vue'
 // import { router } from '@/router'
 
 class HttpRequest {

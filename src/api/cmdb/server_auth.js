@@ -1,9 +1,9 @@
-import axios from '@/libs/http'
+import axios from '@/libs/api.request'
 
 // 获取所有授权规则
 export const getTableData = (params) => {
   return axios.request({
-    url: '/api/cmdb/server_auth/',
+    url: '/cmdb/v1/cmdb/server_auth/',
     method: 'get',
     params
   })
@@ -12,7 +12,7 @@ export const getTableData = (params) => {
 // 添加或修改授权策略
 export const addRule = (data, url, action) => {
   return axios.request({
-    url: `/api/cmdb/server_auth${url}`,
+    url: `/cmdb/v1/cmdb/server_auth${url}`,
     method: action,
     data
   })
@@ -21,7 +21,7 @@ export const addRule = (data, url, action) => {
 // 删除授权策略
 export const delRule = (id) => {
   return axios.request({
-    url: `/api/cmdb/server_auth/${id}`,
+    url: `/cmdb/v1/cmdb/server_auth/${id}`,
     method: 'delete'
   })
 }
@@ -29,11 +29,11 @@ export const delRule = (id) => {
 // 获取系统用户列表
 export const getSystemUser = () => {
   return axios.request({
-    url: '/api/mg/v2/accounts/user/',
+    url: '/mg/v2/accounts/user/',
     method: 'get',
     params: {
       'page': '1',
-      'limit': '1000'
+      'limit': '10000'
     }
   })
 }
@@ -41,7 +41,7 @@ export const getSystemUser = () => {
 // gw接口登录
 export const loginGW = () => {
   return axios.request({
-    url: '/api/accounts/login/',
+    url: '/cmdb/v1/accounts/login/',
     method: 'post',
     data: {
       'username': 'cmdb',
@@ -54,7 +54,7 @@ export const loginGW = () => {
 // 判断当前用户对资产是否有权限
 export const checkAuthServer = (user, sid) => {
   return axios.request({
-    url: '/api/cmdb/server_check_auth/',
+    url: '/cmdb/v1/cmdb/server_check_auth/',
     method: 'get',
     params: {
       'username': user,

@@ -61,6 +61,20 @@ export default {
   mysqlAudit: 'SQL审核',
   mysqlOptimize: 'SQL优化',
   resourceApplication: '资源申请',
-  customTasks: '自定义任务'
-
+  customTasks: '自定义任务',
+  //
+  k8s: 'K8S发布',
+  project: '项目列表',
+  app: '应用列表',
+  project_publish: '项目发布',
+  publish_list: '发布列表',
+  WebSSH:'terminal',
+  SshRecord:'操作回放',
+  cmdb: '资产管理',
+  server_list: '主机管理',
+  server_log: '日志审计',
+  server_auth:'授权规则',
+  server_group: '主机组',
+  tag: '标签管理',
+  adm_user:'管理用户',
 }
