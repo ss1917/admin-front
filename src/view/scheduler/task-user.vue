@@ -5,10 +5,10 @@
     <br/>
     <p>任务一般是通过ssh连接到远程主机执行，编排模板的时候会从此处选择执行用户</p>
     <p>用户为ssh的时候使用的用户，端口为ssh端口，密钥为ssh的私钥，
-      你需要把当对应公钥放入远端需要执行的主机，你也可以把CMDB里面的管理用户导入，当作执行用户来使用</p>
+      你需要把当对应公钥放入远端需要执行的主机，一般我们把CMDB里面的系统级管理用户导入，当作执行用户来使用</p>
   </Alert>
       <div class="search-con search-con-top">
-      <Button type="primary"  @click="editModal('', 'post', '新建参数')" class="search-btn" >新建</Button>
+      <Button type="primary"  @click="editModal('', 'post', '新建用户')" class="search-btn" >新建</Button>
     </div>
   <Table size="small" height="720" ref="selection" border :columns="columns" :data="tableData"></Table>
   <Modal v-model="modalMap.modalVisible"  :title="modalMap.modalTitle" :loading=true :footer-hide=true>

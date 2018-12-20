@@ -122,6 +122,9 @@ export const routerMap = [
       }
     ]
   },
+  //
+
+  //
   {
     path: '/operation_center',
     name: 'operation_center',
@@ -167,45 +170,18 @@ export const routerMap = [
         },
         component: () => import('@/view/multilevel/level-2-1.vue')
       },
-      {
-        path: '/cron',
-        name: 'cron',
-        meta: {
-          icon: 'ios-alarm',
-          title: '定时任务'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'cronjobs',
-            name: 'cronjobs',
-            meta: {
-              icon: 'md-alarm',
-              title: '定时列表'
-            },
-            component: () => import('@/view/cron/cron-jobs.vue')
-          },
-          {
-            path: 'cronlogs',
-            name: 'cronlogs',
-            meta: {
-              icon: 'ios-list-box-outline',
-              title: '任务日志'
-            },
-            component: () => import('@/view/cron/cron-logs.vue')
-          }
-        ]
-      },
-      // {
-      //   path: 'task_layout',
-      //   name: 'task_layout',
-      //   meta: {
-      //     icon: 'md-planet',
-      //     showAlways: true,
-      //     title: '模板配置'
-      //   },
-      //   component: parentView,
-      //   children: [
+    ]
+  },
+  {
+    path: '/task_layout',
+    name: 'task_layout',
+    meta: {
+      icon: 'md-planet',
+      // showAlways: true,
+      title: '模板配置'
+    },
+    component: Main,
+    children: [
       {
         path: 'commandlist',
         name: 'commandlist',
@@ -243,8 +219,35 @@ export const routerMap = [
         component: () => import('@/view/scheduler/task-user.vue')
       }
     ]
-    //   }
-    // ]
+  },
+  {
+    path: '/cron',
+    name: 'cron',
+    meta: {
+      icon: 'ios-alarm',
+      title: '定时任务'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'cronjobs',
+        name: 'cronjobs',
+        meta: {
+          icon: 'md-alarm',
+          title: '定时列表'
+        },
+        component: () => import('@/view/cron/cron-jobs.vue')
+      },
+      {
+        path: 'cronlogs',
+        name: 'cronlogs',
+        meta: {
+          icon: 'ios-list-box-outline',
+          title: '任务日志'
+        },
+        component: () => import('@/view/cron/cron-logs.vue')
+      }
+    ]
   },
   {
     path: '/usermanage',
@@ -339,8 +342,8 @@ export const routes = [
     path: '/doc',
     name: 'doc',
     meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
+      title: '官方文档',
+      href: 'http://docs.opendevops.cn/zh/latest/',
       icon: 'ios-book'
     }
   },
@@ -354,7 +357,7 @@ export const routes = [
         name: 'join_page',
         meta: {
           icon: '_qq',
-          title: 'QQ群'
+          title: 'QQ交流群'
         },
         component: () => import('@/view/join-page.vue')
       }

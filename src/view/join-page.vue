@@ -2,15 +2,17 @@
   <div>
     <Row :gutter="20">
       <i-col span="12">
-        <Card title="交流群1(火爆)" shadow>
+        <Card title="使用交流群1(火爆)" shadow>
           <img class="qq-group-img" :src="qqFans" alt="">
-          <p class="qq-group-intro">本群为使用开源自动化（python tornado vue iview）感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
+          <p class="qq-group-intro">
+            本群为CoDo（CloudOpenDevOps）用户使用交流群，在这里，可以帮你解决平台使用中的困惑和技巧，同时也希望你能提出宝贵的意见和建议，我们一直在努力优化，欢迎你的加入，共同进步。</p>
         </Card>
       </i-col>
       <i-col span="12">
-        <Card title="交流群2" shadow>
+        <Card title="开发交流群1" shadow>
           <img class="qq-group-img" :src="qqFans2" alt="">
-          <p class="qq-group-intro">本群为使用开源自动化（python tornado vue iview）感兴趣的开发者提供交流平台，在这里，解决你开发中的疑惑，共同进步。</p>
+          <p class="qq-group-intro">
+            本群为CoDo（CloudOpenDevOps）开发交流群，欢迎有一定开发基础（python、vue、 lua等），并且对本项目感兴趣的开发人员来此交流，共同进步。</p>
         </Card>
       </i-col>
     </Row>

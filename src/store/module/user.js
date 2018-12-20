@@ -13,41 +13,39 @@ export default {
     hasGetInfo: false
   },
   mutations: {
-    setAvator (state, avatorPath) {
+    setAvator(state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId (state, id) {
+    setUserId(state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
+    setUserName(state, name) {
       state.userName = name
     },
-    setNickName (state, nick) {
+    setNickName(state, nick) {
       state.nickName = name
     },
-    setAccess (state, access) {
+    setAccess(state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       setToken(token)
     },
-    setHasGetInfo (state, status) {
+    setHasGetInfo(state, status) {
       state.hasGetInfo = status
     },
-    SET_RULES (state, rules) {
+    SET_RULES(state, rules) {
       state.rules = rules
     }
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, {username, password, dynamic, nextUrl}) {
+    handleLogin({ commit }, { username, password, dynamic, nextUrl }) {
       username = username.trim()
       return new Promise((resolve, reject) => {
         login({
-          username,
-          password,
-          dynamic,
+          username, password, dynamic,
           next_url: nextUrl
         }).then(res => {
           const data = res.data
@@ -63,7 +61,7 @@ export default {
       })
     },
     // 退出登录
-    handleLogOut ({ state, commit }) {
+    handleLogOut({ state, commit }) {
       return new Promise((resolve, reject) => {
         // logout(state.token).then(() => {
         //   commit('setToken', '')
@@ -78,7 +76,7 @@ export default {
         resolve()
       })
     },
-    authorization ({ commit }, token) {
+    authorization({ commit }, token) {
       return new Promise((resolve, reject) => {
         authorization().then(res => {
           if (parseInt(res.status) === 401) {
@@ -92,7 +90,7 @@ export default {
         })
       })
     },
-    handlePassword ({ commit }, data) {
+    handlePassword({ commit }, data) {
       return new Promise((resolve, reject) => {
         password(data).then(res => {
           if (res.data.code === 0) {
@@ -105,7 +103,7 @@ export default {
         })
       })
     },
-    handleRegister ({ commit }, data) {
+    handleRegister({ commit }, data) {
       return new Promise((resolve, reject) => {
         register(data).then(res => {
           commit('setToken', '')
