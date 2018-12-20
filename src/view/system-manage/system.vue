@@ -311,21 +311,21 @@ export default {
                 }
               ]
             },
-            {
-              name: 'STORAGE_PATH',
-              type: 'i-input',
-              maxlength: 25,
-              value: this.CONFIG_DATA.STORAGE_PATH,
-              placeholder: '${STORAGE_PATH}, 存储桶的路径',
-              label: '存储路径',
-              rule: [
-                {
-                  required: true,
-                  message: 'STORAGE_PATH不能为空',
-                  trigger: 'blur'
-                }
-              ]
-            },
+            // {
+            //   name: 'STORAGE_PATH',
+            //   type: 'i-input',
+            //   maxlength: 25,
+            //   value: this.CONFIG_DATA.STORAGE_PATH,
+            //   placeholder: '${STORAGE_PATH}, 存储桶的路径',
+            //   label: '存储路径',
+            //   rule: [
+            //     {
+            //       required: true,
+            //       message: 'STORAGE_PATH不能为空',
+            //       trigger: 'blur'
+            //     }
+            //   ]
+            // },
             {
               name: 'STORAGE_KEY_ID',
               type: 'i-input',

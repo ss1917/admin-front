@@ -127,7 +127,7 @@ export const routerMap = [
     path: '/k8s',
     name: 'k8s',
     meta: {
-      icon: 'md-menu',
+      icon: 'ios-boat-outline',
       title: 'K8S发布'
     },
     component: Main,
@@ -136,7 +136,7 @@ export const routerMap = [
         path: 'project/',
         name: 'project',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-star',
           title: '项目列表'
         },
         component: () => import('@/view/k8s/project/List.vue')
@@ -145,7 +145,7 @@ export const routerMap = [
         path: 'app/',
         name: 'app',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-plane',
           title: '应用列表'
         },
         component: () => import('@/view/k8s/app/List.vue')
@@ -162,7 +162,7 @@ export const routerMap = [
         path: '/',
         name: 'publish_list',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-stats',
           title: '发布列表'
         },
         component: () => import('@/view/k8s/publish/List.vue')
@@ -191,7 +191,7 @@ export const routerMap = [
     path: '/cmdb',
     name: 'cmdb',
     meta: {
-      icon: 'md-menu',
+      icon: 'ios-cube',
       title: '资产管理'
     },
     component: Main,
@@ -200,7 +200,7 @@ export const routerMap = [
         path: 'server',
         name: 'server_list',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-build',
           title: '主机管理'
         },
         component: () => import('@/view/cmdb/server/List.vue')
@@ -209,7 +209,7 @@ export const routerMap = [
         path: 'server_log',
         name: 'server_log',
         meta: {
-          icon: 'md-menu',
+          icon: 'md-build',
           title: '日志审计'
         },
         component: () => import('@/view/cmdb/server_log/List.vue')
@@ -218,7 +218,7 @@ export const routerMap = [
         path: 'server_auth',
         name: 'server_auth',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-brush',
           title: '授权规则'
         },
         component: () => import('@/view/cmdb/server_auth/List.vue')
@@ -227,7 +227,7 @@ export const routerMap = [
         path: 'server_group',
         name: 'server_group',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-browsers',
           title: '主机组'
         },
         component: () => import('@/view/cmdb/server_group/List.vue')
@@ -236,7 +236,7 @@ export const routerMap = [
         path: 'tag',
         name: 'tag',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-pricetag',
           title: '标签管理'
         },
         component: () => import('@/view/cmdb/tag/List.vue')
@@ -245,7 +245,7 @@ export const routerMap = [
         path: 'adm_user',
         name: 'adm_user',
         meta: {
-          icon: 'md-menu',
+          icon: 'ios-ribbon',
           title: '管理用户'
         },
         component: () => import('@/view/cmdb/adm_user/List.vue')
